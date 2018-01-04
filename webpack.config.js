@@ -105,7 +105,7 @@ module.exports = {
     //     }
     // }),
     //清除掉build下面的文件，以避免hash化后文件冗余
-    new CleanWebpackPlugin([path.resolve(__dirname, './build')]),
+    //new CleanWebpackPlugin([path.resolve(__dirname, './build')]),
     //plugin插入
     new ManifestPlugin({
         fileName: 'manifest.json',
