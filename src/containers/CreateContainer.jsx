@@ -16,7 +16,7 @@ const createFormOption = {
         };
     },
     onFieldsChange(props, fields) {
-        console.log('onFieldsChange', fields);
+        console.log('onFieldsChange1', fields);
         // props.dispatch({
         //     type: 'save_fields',
         //     payload: fields,
