@@ -17,11 +17,11 @@ class LoginForm extends React.Component {
     const { getFieldDecorator } = this.props.form;
     return (
         <div id="login-box">
-        <Row>
+         <Row type="flex" justify="space-around">
             {/* <Col span={8}></Col> */}
-            <Col span={8}  offset={8}>
+            <Col span={6}>
                 <div className="login-box-form">
-                    <Form id="login-form" onSubmit={this.handleSubmit} className="login-form">
+                    <Form id="login-form" justify="center" align="middle" onSubmit={this.handleSubmit} className="login-form">
                             <FormItem>
                             {getFieldDecorator('userName', {
                                 rules: [{ required: true, message: 'Please input your username!' }],
