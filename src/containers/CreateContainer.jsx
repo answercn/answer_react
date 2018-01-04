@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { createForm, createFormField } from 'rc-form';
 import CreateComponents from '../components/Create.jsx';
 import * as allActions from "../actions/createAction.jsx"
 import { Form, DatePicker, TimePicker, Button } from 'antd';
@@ -11,7 +12,7 @@ const createFormOption = {
     mapPropsToFields(props) {
         console.log('mapPropsToFields', props);
         return {
-            email: props.createFormData.email,
+            email: createFormField(props.createFormData.email),
         };
     },
     onFieldsChange(props, fields) {

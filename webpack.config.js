@@ -86,7 +86,9 @@ module.exports = {
             "prop-types":path.resolve(__dirname,'./node_modules/prop-types'),
             "history":path.resolve(__dirname,'./node_modules/history'),
             "redux-logger":path.resolve(__dirname,'./node_modules/redux-logger'),
-            "redux-thunk":path.resolve(__dirname,'./node_modules/redux-thunk')
+            "redux-thunk":path.resolve(__dirname,'./node_modules/redux-thunk'),
+            "rc-form":path.resolve(__dirname,'./node_modules/rc-form'),
+            "moment":path.resolve(__dirname,'./node_modules/moment')
         }  
     },  
     plugins: [

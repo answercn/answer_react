@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Form, DatePicker, TimePicker, Button } from 'antd';
+import moment from 'moment';
 const FormItem = Form.Item;
 const MonthPicker = DatePicker.MonthPicker;
 const RangePicker = DatePicker.RangePicker;
@@ -54,7 +55,9 @@ export default class Create extends React.Component {
         sm: { span: 16 },
       },
     };
+    let dates = moment("2015/08/01",'YYYY/MM/DD');
     const config = {
+      initialValue:dates,
       rules: [{ type: 'object', required: true, message: 'Please select time!' }],
     };
     const rangeConfig = {
