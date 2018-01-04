@@ -19,11 +19,18 @@ import {
 export default class Home extends React.Component {
   constructor(...arg){
       super(...arg);
-      console.log("createdata in home",this.props.createData)
+      console.log("createdata in home",this.props.createData);
+      this.state={
+        isEdit:false
+      }
   }
 
   componentDidMount(){
-    this.props.actions.initHomeData();
+    this.props.actions.initHomeData(()=>{
+        this.setState({
+          isEdit:true
+        })
+    });
   }
   componentDidUpdate(){
     // if(this.props.isFinish){
@@ -40,11 +47,11 @@ export default class Home extends React.Component {
   
   render() {
     let {actions} = this.props;
- 
+    let {isEdit} = this.state; 
     return (
       <div>
-          <AdvancedSearchForm {...this.props}/>
-          <EditableTable {...this.props}/>
+          <AdvancedSearchForm isEdit = {isEdit}  {...this.props}/>
+          <EditableTable isEdit = {isEdit} {...this.props}/>
           {/* <DivText>{isFinish}</DivText> */}
       </div>
   );

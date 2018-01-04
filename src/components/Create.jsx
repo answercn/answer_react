@@ -57,7 +57,8 @@ export default class Create extends React.Component {
         lg: { span:12}
       },
     };
-    let dates = moment("2015/08/01",'YYYY/MM/DD');
+    console.log(this.props)
+    let dates = moment(this.props.createFormData.date,'YYYY/MM/DD');
     const config = {
       initialValue:dates,
       rules: [{ type: 'object', required: true, message: 'Please select time!' }],
@@ -68,6 +69,70 @@ export default class Create extends React.Component {
     return (
       <Form onSubmit={this.handleSubmit}>
       <Row>
+        <Col xs={{span:24}} sm={{span:12}} lg={{span:8}}>
+          <FormItem
+            {...formItemLayout}
+            label="DatePicker"
+          >
+            {getFieldDecorator('date', config)(
+              <DatePicker />
+            )}
+          </FormItem>
+        </Col>
+        <Col xs={{span:24}} sm={{span:12}} lg={{span:8}}>
+          <FormItem
+            {...formItemLayout}
+            label="DatePicker[showTime]"
+          >
+            {getFieldDecorator('date-time-picker', config)(
+              <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" />
+            )}
+          </FormItem>
+        </Col>
+        <Col xs={{span:24}} sm={{span:12}} lg={{span:8}}>
+          <FormItem
+            {...formItemLayout}
+            label="DatePicker[showTime]"
+          >
+            {getFieldDecorator('date-time-picker', config)(
+              <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" />
+            )}
+          </FormItem>
+        </Col>
+        </Row>
+        <Row>
+        <Col xs={{span:24}} sm={{span:12}} lg={{span:8}}>
+          <FormItem
+            {...formItemLayout}
+            label="DatePicker"
+          >
+            {getFieldDecorator('date-picker', config)(
+              <DatePicker />
+            )}
+          </FormItem>
+        </Col>
+        <Col xs={{span:24}} sm={{span:12}} lg={{span:8}}>
+          <FormItem
+            {...formItemLayout}
+            label="DatePicker[showTime]"
+          >
+            {getFieldDecorator('date-time-picker', config)(
+              <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" />
+            )}
+          </FormItem>
+        </Col>
+        <Col xs={{span:24}} sm={{span:12}} lg={{span:8}}>
+          <FormItem
+            {...formItemLayout}
+            label="DatePicker[showTime]"
+          >
+            {getFieldDecorator('date-time-picker', config)(
+              <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" />
+            )}
+          </FormItem>
+        </Col>
+        </Row>
+        <Row>
         <Col xs={{span:24}} sm={{span:12}} lg={{span:8}}>
           <FormItem
             {...formItemLayout}

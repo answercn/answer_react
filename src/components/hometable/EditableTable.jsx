@@ -91,7 +91,7 @@ export default class EditableTable extends React.Component {
       };
       return (
         <div>
-          <Button className="editable-add-btn" onClick={actions.addRow.bind(this)}>Add</Button>
+          <Button className="editable-add-btn" disabled={!this.props.isEdit} onClick={actions.addRow.bind(this)}>Add</Button>
           <Button className="editable-add-btn" onClick={this.linkToAddPage.bind(this,history)}>linkToAddPage</Button>
           <Table bordered dataSource={tableDataSource.dataSource} columns={columns} />
           <Button onClick = {this.handleSave.bind(this)}>finish</Button>

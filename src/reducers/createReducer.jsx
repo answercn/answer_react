@@ -3,7 +3,7 @@ import* as actionsType from "../actions/actionsType.jsx";
 //home对应的初始state数据
 const initialState = {
     createData:{
-        email:"123@wwe.com"
+        date:"2017/01/04"
     }
 }
 //此处reducer中的state指的是对应当前reducer下的state的，也就是home下的state

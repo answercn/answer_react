@@ -12,7 +12,7 @@ const createFormOption = {
     mapPropsToFields(props) {
         console.log('mapPropsToFields', props);
         return {
-            email: createFormField(props.createFormData.email),
+            datepicker: createFormField(props.createFormData),
         };
     },
     onFieldsChange(props, fields) {

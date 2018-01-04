@@ -4,7 +4,7 @@ import {
     fetchPost
   } from '../util/Quest.jsx'
 //初始化数据
-export const initHomeData = function(){
+export const initHomeData = function(cb){
     return dispatch => {
         setTimeout(()=>{
             let data = {
@@ -28,7 +28,8 @@ export const initHomeData = function(){
                 type : actionsType.INIT_HOME_DATA,
                 data
             }) 
-        },500);
+            cb&&cb();
+        },5000);
     }
       fetchGet("../../data.json",null,function(e){
           console.log(e)
