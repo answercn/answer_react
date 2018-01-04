@@ -23,7 +23,7 @@ const createFormOption = {
         // });
     }
 }
-//经过FORM HOC的处理。。。。。。
+//经过FORM HOC的处理
 const CreateWithForm = Form.create(createFormOption)(CreateComponents)
 
 
