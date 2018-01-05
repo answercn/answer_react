@@ -8,25 +8,22 @@ export const initHomeData = function(){
  
 }
 //保存
-export const save = function(data,isFinish,callback){
+export const ceateSave = function(data,isFinish,callback){
     return (dispatch,getState)=>{
         setTimeout(()=>{
             dispatch({
-                type : actionsType.SAVE_FINISH,
-                data,
-                isFinish:!isFinish
+                type : actionsType.CREATE_SAVE,
+                data
             })
-            callback&&callback()
         },1000)
     }
 }
 
 //表单数据改变
-export const changeFormValue = function(e){
-    let data ={value:e.target.value,name:e.target.name};
+export const onChangeValue = function(fields){
+   console.log("onChangeValue",fields)
     return {
-        type : actionsType.CHANGE_VALUE,
-        name:data.name,
-        value:data.value
+        type : actionsType.CREATE_CHANGE_VALUE,
+        fields
     }
 }

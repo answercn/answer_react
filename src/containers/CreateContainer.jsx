@@ -10,18 +10,21 @@ const RangePicker = DatePicker.RangePicker;
 
 const createFormOption = {
     mapPropsToFields(props) {
-        console.log('mapPropsToFields', props);
         return {
-            datepicker: createFormField(props.createFormData),
+            sealingstatus: Form.createFormField({
+                value:props.createData.sealingstatus
+            }),
+            productname: Form.createFormField({
+                value:props.createData.productname
+            })
         };
     },
     onFieldsChange(props, fields) {
-        console.log('onFieldsChange1', fields);
-        // props.dispatch({
-        //     type: 'save_fields',
-        //     payload: fields,
-        // });
-    }
+        props.actions.onChangeValue(fields)
+    },
+    onValuesChange(_, values) {
+       // console.log(values);
+    },
 }
 //经过FORM HOC的处理
 const CreateWithForm = Form.create(createFormOption)(CreateComponents)
@@ -30,7 +33,7 @@ const CreateWithForm = Form.create(createFormOption)(CreateComponents)
 // 映射State和dispatch代码
 const mapStateToProps = (state, ownProps) => {
     return {
-      createFormData:state.create.createData
+        createData:state.create.createData
     }
 }
 
