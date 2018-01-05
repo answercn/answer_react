@@ -27,6 +27,16 @@ module.exports = {
                         "es2015", 
                         "stage-1", 
                         "react"
+                    ],
+                    //按需加载antd组件，否则为压缩文件将有4M大小
+                    "plugins": [
+                        [
+                            "import", {
+                                "libraryName": "antd",
+                                "libraryDirectory": "lib",
+                                "style": true
+                            }
+                        ]
                     ]
                 }
             },{ 
@@ -36,7 +46,9 @@ module.exports = {
             },
             {
                 test: /\.less$/,
-                exclude:/node_modules/,
+                //引入ant design等组件库改为按需加载时，由于文件是从node_modules中取得的
+                //所以不可以不包含node_modules，因此注释掉此处
+                //exclude:/node_modules/,
                 loader:ExtractTextPlugin.extract({  
                     fallback: 'style-loader',  
                     use: [  
