@@ -101,8 +101,11 @@ export default class MainLayout extends React.Component {
         ))
     let {match} = this.props;
     return (
-        <div>
         <Layout style={{ minHeight: '100vh' }}>
+           <Header>
+            react
+          </Header>
+          <Layout>
           <Sider
             collapsible
             collapsed={this.state.collapsed}
@@ -188,8 +191,9 @@ export default class MainLayout extends React.Component {
                       sealing react system
             </Footer>
           </Layout>
+          </Layout>
         </Layout>
-        </div>
+       
     );
   }
 }
