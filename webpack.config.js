@@ -3,10 +3,9 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');//添加Hash后会冗余文件，因此清除
 const ManifestPlugin = require('webpack-manifest-plugin');//生成Manifest映射文件
+console.log(process.env.NODE_ENV);
 module.exports = {
     entry: [
-		"webpack-dev-server/client?http://localhost:8001/",
-		'webpack/hot/only-dev-server',
         path.resolve(__dirname, './src/main.jsx')
     ],
     output: {
@@ -25,49 +24,44 @@ module.exports = {
                 query: {//具体的编译的类型，
                     //compact: false,//表示不压缩
                     "presets": [ 
-                    "es2015", 
-                    "stage-1", 
-                    "react"]
-                }
-            },
-            { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'},
-            {
-                test: /\.css$|\.less$/,
-                use: [  
-                    './node_modules/style-loader',  
-                    {  
-                        loader: './node_modules/css-loader',  
-                        options: {importLoaders: 1}  
-                    },  
-                    {  
-                        loader: './node_modules/postcss-loader'
-                    },
-                    './node_modules/less-loader'
+                        "es2015", 
+                        "stage-1", 
+                        "react"
                     ]
-                      //loader:'./node_modules/style-loader!./node_modules/css-loader!./node_modules/postcss-loader!./node_modules/less-loader' 
-                // ExtractTextPlugin.extract(
-                // 'style-loader!css-loader!less-loader'
-                // ),
+                }
+            },{ 
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader'
             },
-            
             {
+                test: /\.less$/,
+                exclude:/node_modules/,
+                loader:ExtractTextPlugin.extract({  
+                    fallback: 'style-loader',  
+                    use: [  
+                        {
+                            loader:'css-loader'
+                        },{
+                            loader:'autoprefixer-loader'
+                        },{
+                            loader: 'less-loader'  
+                        }
+                    ]  
+                }
+                ),
+            },{
                 test: /\.((woff2?|svg)(\?v=[0-9]\.[0-9]\.[0-9]))|(woff2?|svg|jpe?g|png|gif|ico)$/,
                 loaders: [
-                    // 小于10KB的图片会自动转成dataUrl
                     'url?limit=10240&name=img/[hash:8].[name].[ext]',
                     'image?{bypassOnDebug:true, progressive:true,optimizationLevel:3,pngquant:{quality:"65-80",speed:4}}'
                 ]
-            },
-            {
+            },{
                     test: /\.((ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9]))|(ttf|eot)$/,
                     loader: 'url?limit=10000&name=fonts/[hash:8].[name].[ext]'
-            },
-            {
-                // 匹配routers下面所有文件
-                // ([^/]+)\/?([^/]*) 匹配xxx/xxx 或者 xxx
+            },{
                 test: /containers\/([^/]+)\/?([^/]*)\.jsx?$/,
                 include: path.resolve(__dirname, './src'),
-                // loader: 'bundle-loader?lazy'
                 loaders: ['bundle-loader?lazy', 'babel-loader']
               }
         ]
@@ -92,25 +86,33 @@ module.exports = {
         }  
     },  
     plugins: [
-      new webpack.HotModuleReplacementPlugin(),
-    //   new webpack.optimize.UglifyJsPlugin({
-    //     compress: {
-    //         warnings: false,
-    //     },
-    //     output: {
-    //         comments: false,
-    //     },
-    //     mangle: {
-    //         except: ['$super', '$', 'exports', 'require']
-    //     }
-    // }),
-    //清除掉build下面的文件，以避免hash化后文件冗余
-    //new CleanWebpackPlugin([path.resolve(__dirname, './build')]),
-    //plugin插入
-    new ManifestPlugin({
-        fileName: 'manifest.json',
-        basePath: '/public/',
-   })
-     // new ExtractTextPlugin('./src/less/main.css')
+        //压缩处理
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false,
+            },
+            output: {
+                comments: false,
+            },
+            mangle: {
+                except: ['$super', '$', 'exports', 'require']
+            }
+        }),
+        //默认组件
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+            },
+        }),
+        new ManifestPlugin({
+            fileName: 'manifest.json',
+            basePath: '/public/',
+        }),
+        //先清除build文件
+        new CleanWebpackPlugin([path.resolve(__dirname, './build')]),
+        //单独抽出css输出为该文件，默认路径为build输出的路径
+        new ExtractTextPlugin({
+            filename: 'main.css'
+        })
     ]
 };

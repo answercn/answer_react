@@ -1,4 +1,4 @@
-require( "../node_modules/antd/dist/antd.less");
+//require( "../node_modules/antd/dist/antd.less");
 require( "./less/main.less");
 import React from 'react';
 import ReactDOM from 'react-dom';
