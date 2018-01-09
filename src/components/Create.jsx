@@ -14,6 +14,7 @@ import {
 export default class Create extends React.Component {
   constructor(...props){
     super(...props);
+    console.log(this.props)
   }
   handleSubmit = (e) => {
     e.preventDefault();
@@ -44,6 +45,10 @@ export default class Create extends React.Component {
   componentDidUpdate(){
   
   }
+  componentDidMount(){
+    //可在此处通过该方法将带过来的值设置到form中
+    this.props.form.setFieldsValue({productname:"B"})
+  }
   componentWillReceiveProps(nextprops){
     
   }
@@ -52,13 +57,13 @@ export default class Create extends React.Component {
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
-        sm: { span: 2 },
-        lg: { span: 2}
+        sm: { span: 12 },
+        lg: { span: 10}
       },
       wrapperCol: {
         xs: { span: 24},
-        sm: { span: 6},
-        lg: { span:6}
+        sm: { span: 12},
+        lg: { span: 12}
       },
     };
     //let dates = moment(this.props.createFormData.date,'YYYY/MM/DD');
@@ -69,10 +74,11 @@ export default class Create extends React.Component {
     const rangeConfig = {
       rules: [{ type: 'array', required: true, message: 'Please select time!' }],
     };
+    const tableColSize = {xs:24,sm:12,lg:8};
     return (
       <Form onSubmit={this.handleSubmit}>
       <Row>
-        <Col>
+        <Col {...tableColSize}>
           <FormItem
             {...formItemLayout}
             label="sealingstatus"
@@ -82,7 +88,7 @@ export default class Create extends React.Component {
             })(<Input />)}
             </FormItem>
         </Col>
-        <Col>
+        <Col {...tableColSize}>
           <FormItem
             {...formItemLayout}
             label="productname"
@@ -92,7 +98,7 @@ export default class Create extends React.Component {
             })(<Input />)}
           </FormItem>
         </Col>
-        <Col>
+        <Col {...tableColSize}>
           <FormItem
             {...formItemLayout}
             label="DatePicker[showTime]"
@@ -105,7 +111,7 @@ export default class Create extends React.Component {
         </Row>
         <Row>
           {this.props.createData.productname=="A"&&
-            <Col>
+            <Col {...tableColSize}>
               <FormItem
                 {...formItemLayout}
                 label="试点输入"
@@ -116,7 +122,7 @@ export default class Create extends React.Component {
                 </FormItem>
             </Col>}
           
-          <Col>
+          <Col {...tableColSize}>
             <FormItem
               {...formItemLayout}
               label="ddd"
@@ -127,14 +133,9 @@ export default class Create extends React.Component {
               </FormItem>
           </Col>
         </Row>
-        <Row>
+        <Row type="flex" justify="space-around" align="middle">
           <Col>
-            <FormItem 
-              wrapperCol={{
-                xs: { span: 24, offset: 0 },
-                sm: { span: 13, offset: 11 },
-              }}
-            >
+            <FormItem>
               <Button type="primary" htmlType="submit">Submit</Button>
             </FormItem>
           </Col>

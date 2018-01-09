@@ -8,8 +8,10 @@ import {
   HashRouter,
   Route,
   Link,
-  NavLink
+  NavLink,
+  Redirect
 } from 'react-router-dom'
+
 //包装好的处理按需加载的组件
 import Bundle from "../util/Bundle.jsx"
 //import Home from "../containers/HomeContainer.jsx"
@@ -84,14 +86,17 @@ export default class MainLayout extends React.Component {
     this.state = {
       theme: 'dark',
       current: '1',
-      collapsed: false
+      collapsed: false,
+      selectKey:"home"
     }
   }
-  onCollapse = (collapsed) => {
-   // console.log("collapsed",collapsed);
+  onCollapse(collapsed) {
     this.setState({ collapsed });
   }
-
+  onCollapseMenu(){
+  }
+  componentDidUpdate(){
+  }
   componentDidMount(){
   
   }
@@ -100,6 +105,7 @@ export default class MainLayout extends React.Component {
           <Breadcrumb.Item key={i}>{element}</Breadcrumb.Item>
         ))
     let {match} = this.props;
+    console.log(this.props)
     return (
         <Layout style={{ minHeight: '100vh' }}>
            <Header>
@@ -112,15 +118,15 @@ export default class MainLayout extends React.Component {
             onCollapse={this.onCollapse}
           >
             <div className="logo" />
-            <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-              <Menu.Item key="1">
-              <Link to={match.url+"/home"}>
+            <Menu ref = {(menu)=>{this.menu = menu}} theme="dark" defaultSelectedKeys={[match.params.id]} mode="inline">
+              <Menu.Item key={"home"}>
+              <Link to={"/home"}>
                   <Icon type="pie-chart" />
                   <span>Home</span>
               </Link>
               </Menu.Item>
-              <Menu.Item key="2">
-              <Link replace={true} to={match.url+"/create"}>
+              <Menu.Item key={"create"}>
+              <Link replace={true} to={"/create"}>
                   <Icon type="desktop" />
                   <span>create</span>
                </Link>
@@ -144,8 +150,8 @@ export default class MainLayout extends React.Component {
                 <Menu.Item key="6">Team 1</Menu.Item>
                 <Menu.Item key="8">Team 2</Menu.Item>
               </SubMenu>
-              <Menu.Item key="9">
-              <Link to="/index/topics">
+              <Menu.Item key="topics">
+              <Link to="/topics">
                   <Icon type="file" />
                   <span>topics</span>
                 </Link>
@@ -182,9 +188,12 @@ export default class MainLayout extends React.Component {
                         component={item.component}
                       />
                   ))} */}
-                  <Route exact path={match.url+"/home"} component={Home}/>
-                  <Route path={match.url+"/create"} component={Create}/>
-                  <Route path={match.url+"/topics"} component={Topics}/>
+                    {/* 路由的父子组件path可以一样，如果一样的话则由父层至子层组件逐级加载 */}
+                    <Route path={"/home"} component={Home}/>
+                    <Route path={"/create"} component={Create}/>
+                    <Route path={"/topics"} component={Topics}/>
+                   
+                  
               </div>
             </Content>
             <Footer style={{ textAlign: 'center' }}>

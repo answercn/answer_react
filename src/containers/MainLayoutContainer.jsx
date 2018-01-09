@@ -3,9 +3,8 @@ import MainLayout from '../components/MainLayout.jsx';
 
 // 容器组件代码
 const mapStateToProps = (state, ownProps) => {
-    debugger
     return {
-        
+        router:state.router
     }
 }
 

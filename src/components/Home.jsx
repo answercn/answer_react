@@ -20,17 +20,27 @@ export default class Home extends React.Component {
   constructor(...arg){
       super(...arg);
       console.log("createdata in home",this.props.createData);
-      this.state={
-        isEdit:false
-      }
+      this.isEdit = false;
   }
 
   componentDidMount(){
-    this.props.actions.initHomeData(()=>{
-        this.setState({
-          isEdit:true
-        })
+    let promiseInit = new Promise((resolve,reject)=>{
+      this.props.actions.initHomeData(()=>{
+        resolve()
+      });
     });
+    Promise.all([promiseInit]).then((value)=>{
+      // success
+      this.isEdit = true
+     
+    }, function(error) {
+      // failure
+    })
+    // this.props.actions.initHomeData(()=>{
+    //     this.setState({
+    //       isEdit:true
+    //     })
+    // });
   }
   componentDidUpdate(){
     // if(this.props.isFinish){
@@ -38,7 +48,7 @@ export default class Home extends React.Component {
     // }
   }
   componentWillUnmount(){
-   
+    
   }
  
   componentWillReceiveProps(nextProps){
@@ -47,11 +57,10 @@ export default class Home extends React.Component {
   
   render() {
     let {actions} = this.props;
-    let {isEdit} = this.state; 
     return (
       <div>
-          <AdvancedSearchForm isEdit = {isEdit}  {...this.props}/>
-          <EditableTable isEdit = {isEdit} {...this.props}/>
+          <AdvancedSearchForm isEdit = {this.isEdit}  {...this.props}/>
+          <EditableTable isEdit = {this.isEdit} {...this.props}/>
           {/* <DivText>{isFinish}</DivText> */}
       </div>
   );

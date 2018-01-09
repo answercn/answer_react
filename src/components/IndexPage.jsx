@@ -10,7 +10,8 @@ import {
   HashRouter,
   Route,
   Link,
-  NavLink
+  NavLink,
+  Redirect
 } from 'react-router-dom'
 //包装好的处理按需加载的组件
 import Bundle from "../util/Bundle.jsx"
@@ -36,7 +37,8 @@ export default class IndexPage extends React.Component{
         return (
             <div>
                 <Route path="/login" component={Login}/>
-                <Route path="/index" component={MainLayout}/>
+                <Route path="/:id?" component={MainLayout}/>
+                <Route exact path="/" render={() => (<Redirect to="/home"/>)}></Route >
             </div>
         )
     }

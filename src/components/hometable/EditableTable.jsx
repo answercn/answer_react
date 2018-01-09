@@ -54,7 +54,9 @@ export default class EditableTable extends React.Component {
     }
     //跳转到新增页面
     linkToAddPage = function(history){
-      history.push("/about")
+     // let param = "105363748"
+      //history.push(`/index/create/${param}`);
+      history.push({pathname:`/create`,state:{status:"from home"}})
     }
     onDelete = (key) => {
       const dataSource = [...this.props.tableDataSource];
