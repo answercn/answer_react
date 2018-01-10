@@ -11,7 +11,6 @@ import { Tag } from 'antd';
 export default class Notice extends React.Component{
     constructor(props){
         super(props);
-        this.data = []
     }
     componentDidMount(){
         console.log("this notice",this.props)

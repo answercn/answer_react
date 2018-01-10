@@ -55,29 +55,18 @@ export default class AdvancedSearchForm extends React.Component {
           className="ant-advanced-search-form"
           onSubmit={this.handleSearch}
         >
-          <Row gutter={24}>
-            <Col span={8} key={0}>
-              <FormItem label={`name`}>
-                {getFieldDecorator(`name`,{
-                  rules: [{ required: true, message: 'Please input your name!' }]
-                })(
-                   <Input placeholder="placeholder" />
-                )}
-              </FormItem>
-            </Col>
-          </Row>
-          <Row gutter={24}>{this.getFields()}</Row>
-          <Row>
-            <Col span={24} style={{ textAlign: 'right' }}>
-              <Button type="primary" htmlType="submit">Search</Button>
-              <Button style={{ marginLeft: 8 }} onClick={this.handleReset}>
-                Clear
-              </Button>
-              <a style={{ marginLeft: 8, fontSize: 12 }} onClick={this.toggle}>
-                Collapse <Icon type={this.state.expand ? 'up' : 'down'} />
-              </a>
-            </Col>
-          </Row>
+            <Row gutter={24}>{this.getFields()}</Row>
+            <Row>
+                <Col span={24} style={{ textAlign: 'right' }}>
+                    <Button type="primary" htmlType="submit">Search</Button>
+                    <Button style={{ marginLeft: 8 }} onClick={this.handleReset}>
+                      Clear
+                    </Button>
+                    <a style={{ marginLeft: 8, fontSize: 12 }} onClick={this.toggle}>
+                      Collapse <Icon type={this.state.expand ? 'up' : 'down'} />
+                    </a>
+                </Col>
+            </Row>
         </Form>
       );
     }
