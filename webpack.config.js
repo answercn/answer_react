@@ -45,6 +45,22 @@ module.exports = {
                 loader: 'babel-loader'
             },
             {
+                //此处Less不跟.css一起，否则编译器无法编译@
+                test: /\.css$/,
+                //引入ant design等组件库改为按需加载时，由于文件是从node_modules中取得的
+                //所以不可以不包含node_modules，因此注释掉此处
+                //exclude:/node_modules/,
+                loader:ExtractTextPlugin.extract({  
+                    fallback: 'style-loader',  
+                    use: [  
+                        {
+                            loader:'css-loader'
+                        }
+                    ]  
+                }
+                ),
+            }, 
+            {
                 test: /\.less$/,
                 //引入ant design等组件库改为按需加载时，由于文件是从node_modules中取得的
                 //所以不可以不包含node_modules，因此注释掉此处
@@ -81,6 +97,7 @@ module.exports = {
 	resolve: {  
         alias: {  
             "antd":  path.resolve(__dirname, './node_modules/antd' ),
+            "ant-design-pro":  path.resolve(__dirname, './node_modules/ant-design-pro' ),
             "react-router": path.resolve(__dirname, './node_modules/react-router' ),
             "react-router-dom": path.resolve(__dirname,"./node_modules/react-router-dom" ),
             "react-redux": path.resolve(__dirname, './node_modules/react-redux' ),

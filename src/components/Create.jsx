@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Row,Col, Form, DatePicker, TimePicker, Button,Input } from 'antd';
+import {Row,Col, Form, DatePicker, TimePicker, Button,Input,Select } from 'antd';
 import moment from 'moment';
+const Option = Select.Option;
 const FormItem = Form.Item;
 const MonthPicker = DatePicker.MonthPicker;
 const RangePicker = DatePicker.RangePicker;
@@ -10,35 +11,34 @@ import {
   Link
 } from 'react-router-dom'
 
-
+/**
+ * 新建组件
+ */
 export default class Create extends React.Component {
   constructor(...props){
     super(...props);
-    console.log(this.props)
+    console.log(this.props);
+  
+    
+  }
+  sizeCheck(rule, values, callback){
+    //该方法为自定义实时校验，错误信息作为callback的参数传递进去
+    if(values&&values<10){
+      callback("不能小于十")
+    }else{
+      callback()
+    }
   }
   handleSubmit = (e) => {
     e.preventDefault();
-
+    //表单数据校验
     this.props.form.validateFields((err, fieldsValue) => {
       if (err) {
         return;
       }
-      // Should format date value before submit.
-      // const rangeValue = fieldsValue['range-picker'];
-      // const rangeTimeValue = fieldsValue['range-time-picker'];
-      // const values = {
-      //   ...fieldsValue,
-      //   'date-picker': fieldsValue['date-picker'].format('YYYY-MM-DD'),
-      //   'date-time-picker': fieldsValue['date-time-picker'].format('YYYY-MM-DD HH:mm:ss'),
-      //   'month-picker': fieldsValue['month-picker'].format('YYYY-MM'),
-      //   'range-picker': [rangeValue[0].format('YYYY-MM-DD'), rangeValue[1].format('YYYY-MM-DD')],
-      //   'range-time-picker': [
-      //     rangeTimeValue[0].format('YYYY-MM-DD HH:mm:ss'),
-      //     rangeTimeValue[1].format('YYYY-MM-DD HH:mm:ss'),
-      //   ],
-      //   'time-picker': fieldsValue['time-picker'].format('HH:mm:ss'),
-      // };
-      console.log('Received values of form: ', fieldsValue);
+      console.log('Received values of form: ', fieldsValue.size);
+     
+     
       this.props.actions.ceateSave(fieldsValue);
     });
   }
@@ -46,11 +46,11 @@ export default class Create extends React.Component {
   
   }
   componentDidMount(){
-    //可在此处通过该方法将带过来的值设置到form中
-    this.props.form.setFieldsValue({productname:"B"})
+    //可在此处通过该方法将带过来的值或者请求来的值设置到form中
+    this.props.form.setFieldsValue({productname:"B",country:"usa"})
   }
   componentWillReceiveProps(nextprops){
-    
+   
   }
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -125,13 +125,34 @@ export default class Create extends React.Component {
           <Col {...tableColSize}>
             <FormItem
               {...formItemLayout}
-              label="ddd"
+              label="size"
             >
-              {getFieldDecorator('ddd', {
-                  rules: [{ required: true, message: 'Username is required!' }],
+              {getFieldDecorator('size', {
+                  rules: [
+                    {  required: true, message: 'size is required!' },
+                    { validator: this.sizeCheck }
+                  ]
+                 
               })(<Input />)}
               </FormItem>
           </Col>
+
+          <Col {...tableColSize}>
+            <FormItem
+              {...formItemLayout}
+              label = "country"
+            >
+              {getFieldDecorator('country', {
+                  rules: [{ required: true, message: 'Username is required!' }],
+              })(
+                <Select placeholder="Please select a country">
+                  <Option value="china">China</Option>
+                  <Option value="use">U.S.A</Option>
+                </Select>
+              )}
+              </FormItem>
+          </Col>
+            
         </Row>
         <Row type="flex" justify="space-around" align="middle">
           <Col>

@@ -16,6 +16,9 @@ const createFormOption = {
             }),
             productname: Form.createFormField({
                 value:props.createData.productname
+            }),
+            country: Form.createFormField({
+                value:props.createData.country
             })
         };
     },

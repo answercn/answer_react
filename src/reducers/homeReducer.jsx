@@ -24,8 +24,8 @@ export const homeReducer = function (state = initialState, action) {
         //     return Object.assign({}, state, {isFinish:action.isFinish});
         //     break
         case actionsType.ADD_ROWDATA:
-            const { count, dataSource } = state.tableDataSource;
-            const newData = {
+            let { count, dataSource } = state.tableDataSource;
+            let newData = {
                     key: count,
                     name: `Edward King ${count}`,
                     age: 32,

@@ -13,6 +13,7 @@
     "install-node": "6.11.1"
   },
   "dependencies": {
+    "ant-design-pro": "^0.3.1",
     "antd": "^3.1.0",
     "autoprefixer-loader": "^3.2.0",
     "babel-plugin-import": "^1.6.2",
@@ -24,6 +25,7 @@
     "history": "^4.7.2",
     "jQuery": "^1.7.4",
     "jquery": "^3.2.1",
+    "lodash": "^4.17.4",
     "react": "^15.4.0",
     "react-dom": "^15.4.0",
     "react-router-redux": "^5.0.0-alpha.9",

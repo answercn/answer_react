@@ -5,7 +5,8 @@ import moment from 'moment';
 const initialState = {
     createData:{
         sealingstatus:123,
-        productname:"A"
+        productname:"A",
+        country:"china"
     }
 }
 //此处reducer中的state指的是对应当前reducer下的state的，也就是home下的state

@@ -15,7 +15,9 @@ import {
 // let DivOld = ({children,...props}) => <div {...props}>{children}</div>;
 // const DivText = withReverse(DivOld);
 
-/**HOME**/
+/**
+ * 首页组件
+ */
 export default class Home extends React.Component {
   constructor(...arg){
       super(...arg);
@@ -23,6 +25,9 @@ export default class Home extends React.Component {
       this.isEdit = false;
   }
 
+  updataHomeAllData(){
+  
+  }
   componentDidMount(){
     let promiseInit = new Promise((resolve,reject)=>{
       this.props.actions.initHomeData(()=>{
@@ -36,23 +41,15 @@ export default class Home extends React.Component {
     }, function(error) {
       // failure
     })
-    // this.props.actions.initHomeData(()=>{
-    //     this.setState({
-    //       isEdit:true
-    //     })
-    // });
   }
   componentDidUpdate(){
-    // if(this.props.isFinish){
-    //   this.props.actions.closeFinishTip();
-    // }
+    
   }
   componentWillUnmount(){
     
   }
  
   componentWillReceiveProps(nextProps){
-     
   }
   
   render() {

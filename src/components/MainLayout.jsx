@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import GlobalFooter from 'ant-design-pro/lib/GlobalFooter';
+import { Layout, Menu, Breadcrumb, Icon,Row,Col } from 'antd';
 const { Header, Content, Footer, Switch ,Sider } = Layout;
 const SubMenu = Menu.SubMenu;
 import {
@@ -17,6 +18,7 @@ import Bundle from "../util/Bundle.jsx"
 //import Home from "../containers/HomeContainer.jsx"
 //import About from "./About.jsx"
 //异步加载组件
+import NoticeContainer from '../containers/NoticeContainer.jsx'
 import homeContainer from 'bundle-loader?lazy&name=[name]!../containers/HomeContainer.jsx'
 import createContainer from 'bundle-loader?lazy&name=[name]!../containers/CreateContainer.jsx'
 //组件按需加载
@@ -80,6 +82,9 @@ const routes = [
     main: () =>Topics
   }
 ]
+/**
+ * 页面布局组件
+ */
 export default class MainLayout extends React.Component {
   constructor(...arg){
     super(...arg);
@@ -98,26 +103,36 @@ export default class MainLayout extends React.Component {
   componentDidUpdate(){
   }
   componentDidMount(){
-  
   }
   render() {
     let BreadcrumbItem = this.props.location.hash.replace(/\#\//,"").split("/").map((element,i) => (
           <Breadcrumb.Item key={i}>{element}</Breadcrumb.Item>
         ))
     let {match} = this.props;
-    console.log(this.props)
+    const links = [{
+      title: '帮助',
+      href: '',
+    }, {
+      title: '隐私',
+      href: '',
+    }, {
+      title: '条款',
+      href: '',
+      blankTarget: true,
+    }];
+    
+    const copyright = <div>Copyright <Icon type="copyright" /> sealing system form accenture</div>;
     return (
         <Layout style={{ minHeight: '100vh' }}>
-           <Header>
-            react
-          </Header>
+          
           <Layout>
+         
           <Sider
             collapsible
             collapsed={this.state.collapsed}
-            onCollapse={this.onCollapse}
+            onCollapse={this.onCollapse.bind(this)}
           >
-            <div className="logo" />
+            <div className="logo" style={{lineHeight:"64px",textAlign:"center",color:"#fff"}}>Sealing System</div>
             <Menu ref = {(menu)=>{this.menu = menu}} theme="dark" defaultSelectedKeys={[match.params.id]} mode="inline">
               <Menu.Item key={"home"}>
               <Link to={"/home"}>
@@ -171,7 +186,29 @@ export default class MainLayout extends React.Component {
               </SubMenu>
             </Menu>
           </Sider>
+
           <Layout>
+          <Header className="header" style={{background:"#fff"}}>
+              <Row>
+                {/* <Col span={4}>
+                        <div className="logo" style={{textAlign:"center",color:"#fff"}}>Sealing System</div>
+                    </Col> */}
+                    <Col span={16}>
+                        <Menu
+                          mode="horizontal"
+                          defaultSelectedKeys={['2']}
+                          style={{ lineHeight: '64px' }}
+                        >
+                          <Menu.Item key="1">nav 1</Menu.Item>
+                          <Menu.Item key="2">nav 2</Menu.Item>
+                          <Menu.Item key="3">nav 3</Menu.Item>
+                        </Menu>
+                    </Col>
+                    <Col span={8}>
+                        <NoticeContainer/>
+                    </Col>
+              </Row>
+          </Header>
             {/* <Header style={{ background: '#fff', padding: 0 }}></Header> */}
             <Content style={{ margin: '0 16px' }}>
               {/* 面包屑 */}
@@ -180,25 +217,16 @@ export default class MainLayout extends React.Component {
               </Breadcrumb>
               {/* 内容 */}
               <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
-                {/* {routes.map((item,index)=>(
-                    <Route
-                        key={index}
-                        exact={item.exact}
-                        path={item.path}
-                        component={item.component}
-                      />
-                  ))} */}
                     {/* 路由的父子组件path可以一样，如果一样的话则由父层至子层组件逐级加载 */}
                     <Route path={"/home"} component={Home}/>
                     <Route path={"/create"} component={Create}/>
                     <Route path={"/topics"} component={Topics}/>
-                   
-                  
               </div>
             </Content>
             <Footer style={{ textAlign: 'center' }}>
-                      sealing react system
+                <GlobalFooter links={links} copyright={copyright} />
             </Footer>
+            
           </Layout>
           </Layout>
         </Layout>
