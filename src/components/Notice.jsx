@@ -14,7 +14,7 @@ export default class Notice extends React.Component{
         this.data = []
     }
     componentDidMount(){
-      console.log("this notice",this.props)
+        console.log("this notice",this.props)
     }
     onItemClick(item, tabProps) {
         console.log(item, tabProps);
@@ -48,7 +48,7 @@ export default class Notice extends React.Component{
             return newNotice;
         });
         return groupBy(newNotices, 'type');
-        }
+    }
     render(){
         const noticeDatas = this.props.noticeData; 
         const noticeData = this.getNoticeData(noticeDatas);

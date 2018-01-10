@@ -10,6 +10,7 @@ const RangePicker = DatePicker.RangePicker;
 
 const createFormOption = {
     mapPropsToFields(props) {
+        //此步骤在初始化数据的时候将store中的数据映射给form
         return {
             sealingstatus: Form.createFormField({
                 value:props.createData.sealingstatus
@@ -19,14 +20,21 @@ const createFormOption = {
             }),
             country: Form.createFormField({
                 value:props.createData.country
+            }),
+            size: Form.createFormField({
+                value:props.createData.size
+            }),
+            countryCode: Form.createFormField({
+                value:props.createData.countryCode
             })
         };
     },
     onFieldsChange(props, fields) {
-        props.actions.onChangeValue(fields)
+        //form所有form的元素发生变化时触发该事件，包括元素的显示隐藏都会触发
+        //props.actions.onChangeValue(fields);
     },
-    onValuesChange(_, values) {
-       // console.log(values);
+    onValuesChange(props, values) {
+        props.actions.onChangeValue(values);
     },
 }
 //经过FORM HOC的处理

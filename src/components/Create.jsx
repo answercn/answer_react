@@ -47,10 +47,16 @@ export default class Create extends React.Component {
   }
   componentDidMount(){
     //可在此处通过该方法将带过来的值或者请求来的值设置到form中
-    this.props.form.setFieldsValue({productname:"B",country:"usa"})
+    this.props.form.setFieldsValue({productname:"B",country:"use"})
   }
   componentWillReceiveProps(nextprops){
    
+  }
+  handleCountryChange = (value) => {
+    console.log(value);
+    this.props.form.setFieldsValue({
+      countryCode: `Hi, ${value === 'china' ? value : ""}!`,
+    });
   }
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -136,7 +142,6 @@ export default class Create extends React.Component {
               })(<Input />)}
               </FormItem>
           </Col>
-
           <Col {...tableColSize}>
             <FormItem
               {...formItemLayout}
@@ -145,7 +150,7 @@ export default class Create extends React.Component {
               {getFieldDecorator('country', {
                   rules: [{ required: true, message: 'Username is required!' }],
               })(
-                <Select placeholder="Please select a country">
+                <Select placeholder="Please select a country" onChange={this.handleCountryChange.bind(this)}>
                   <Option value="china">China</Option>
                   <Option value="use">U.S.A</Option>
                 </Select>
@@ -153,6 +158,18 @@ export default class Create extends React.Component {
               </FormItem>
           </Col>
             
+        </Row>
+        <Row>
+          <Col {...tableColSize} style={{display:this.props.createData.country=="china"?"block":"none"}}>
+            <FormItem
+              {...formItemLayout}
+              label="countryCode"
+            >
+              {getFieldDecorator('countryCode', {
+                  rules: [{ required: true, message: 'countryCode is required!' }],
+              })(<Input />)}
+              </FormItem>
+          </Col>
         </Row>
         <Row type="flex" justify="space-around" align="middle">
           <Col>

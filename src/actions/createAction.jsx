@@ -20,10 +20,10 @@ export const ceateSave = function(data,isFinish,callback){
 }
 
 //表单数据改变
-export const onChangeValue = function(fields){
-   console.log("onChangeValue",fields)
+export const onChangeValue = function(values){
+   console.log("onChangeValue",values)
     return {
         type : actionsType.CREATE_CHANGE_VALUE,
-        fields
+        values
     }
 }
