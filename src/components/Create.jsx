@@ -17,46 +17,6 @@ import {
 export default class Create extends React.Component {
   constructor(...props){
     super(...props);
-    console.log(this.props);
-  
-    
-  }
-  sizeCheck(rule, values, callback){
-    //该方法为自定义实时校验，错误信息作为callback的参数传递进去
-    if(values&&values<10){
-      callback("不能小于十")
-    }else{
-      callback()
-    }
-  }
-  handleSubmit = (e) => {
-    e.preventDefault();
-    //表单数据校验
-    this.props.form.validateFields((err, fieldsValue) => {
-      if (err) {
-        return;
-      }
-      console.log('Received values of form: ', fieldsValue.size);
-     
-     
-      this.props.actions.ceateSave(fieldsValue);
-    });
-  }
-  componentDidUpdate(){
-  
-  }
-  componentDidMount(){
-    //可在此处通过该方法将带过来的值或者请求来的值设置到form中
-    this.props.form.setFieldsValue({productname:"B",country:"use"})
-  }
-  componentWillReceiveProps(nextprops){
-   
-  }
-  handleCountryChange = (value) => {
-    console.log(value);
-    this.props.form.setFieldsValue({
-      countryCode: `Hi, ${value === 'china' ? value : ""}!`,
-    });
   }
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -82,7 +42,7 @@ export default class Create extends React.Component {
     };
     const tableColSize = {xs:24,sm:12,lg:8};
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <Form onSubmit={this.props.handleSubmit}>
       <Row>
         <Col {...tableColSize}>
           <FormItem
@@ -122,7 +82,7 @@ export default class Create extends React.Component {
                 {...formItemLayout}
                 label="试点输入"
               >
-                {getFieldDecorator('试点输入', {
+                {getFieldDecorator('testEnter', {
                     rules: [{ required: true, message: 'Username is required!' }],
                 })(<Input />)}
                 </FormItem>
@@ -150,7 +110,7 @@ export default class Create extends React.Component {
               {getFieldDecorator('country', {
                   rules: [{ required: true, message: 'Username is required!' }],
               })(
-                <Select placeholder="Please select a country" onChange={this.handleCountryChange.bind(this)}>
+                <Select placeholder="Please select a country" onChange={this.props.handleCountryChange.bind(this)}>
                   <Option value="china">China</Option>
                   <Option value="use">U.S.A</Option>
                 </Select>

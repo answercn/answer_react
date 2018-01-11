@@ -13,7 +13,7 @@ const mapDispatchToProps = (
     ownProps
 ) => {
     return {
-       
+        //actions:bindActionCreators(allActions,dispatch)
     };
 }
 

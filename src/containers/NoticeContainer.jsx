@@ -4,6 +4,7 @@ import Notices from '../components/Notice.jsx';
 // 容器组件代码
 const mapStateToProps = (state, ownProps) => {
     return {
+        userData:state.user.userData,
         noticeData:state.notice.data
     }
 }

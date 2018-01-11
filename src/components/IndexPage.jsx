@@ -36,9 +36,14 @@ export default class IndexPage extends React.Component{
     render(){
         return (
             <div>
+                <Route exact path="/" render={() => (<div>首页</div>)}></Route >
                 <Route path="/login" component={Login}/>
-                <Route path="/:id?" component={MainLayout}/>
-                <Route exact path="/" render={() => (<Redirect to="/home"/>)}></Route >
+                {/* main页面公共组件，凡path中包含/main的都会加载MainLayout组件，这也是不把他作为"/"来用的原因 */}
+                <Route path="/main" component={MainLayout}/>
+                {/* 重定向至主home页面 */}
+                <Route exact path="/" render={() => (<Redirect to="/main/home"/>)}></Route >
+                <Route exact path="/main" render={() => (<Redirect to="/main/home"/>)}></Route > 
+                {/* <Route component={() => (<div>404</div>)}/> */}
             </div>
         )
     }

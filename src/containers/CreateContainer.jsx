@@ -1,3 +1,5 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { createForm, createFormField } from 'rc-form';
@@ -8,6 +10,58 @@ const FormItem = Form.Item;
 const MonthPicker = DatePicker.MonthPicker;
 const RangePicker = DatePicker.RangePicker;
 
+//容器组件开始
+class Create extends React.Component{
+    constructor(...props){
+        super(...props);
+      }
+    sizeCheck(rule, values, callback){
+        //该方法为自定义实时校验，错误信息作为callback的参数传递进去
+        if(values&&values<10){
+          callback("不能小于十")
+        }else{
+          callback()
+        }
+      }
+      handleSubmit = (e) => {
+        e.preventDefault();
+        //表单数据校验
+        this.props.form.validateFields((err, fieldsValue) => {
+          if (err) {
+            return;
+          }
+          console.log('Received values of form: ', fieldsValue.size);
+         
+         
+          this.props.actions.ceateSave(fieldsValue);
+        });
+      }
+      componentDidUpdate(){
+      
+      }
+      componentDidMount(){
+        //可在此处通过该方法将带过来的值或者请求来的值设置到form中
+        this.props.form.setFieldsValue({productname:"B",country:"use"})
+      }
+      componentWillReceiveProps(nextprops){
+       
+      }
+      handleCountryChange = (value) => {
+        console.log(value);
+        this.props.form.setFieldsValue({
+          countryCode: `Hi, ${value === 'china' ? value : ""}!`,
+        });
+      }
+      render(){
+          return(
+            <CreateComponents handleSubmit={this.handleSubmit.bind(this)} handleCountryChange={this.handleCountryChange.bind(this)} {...this.props}/>
+          )
+      }
+}
+
+/**
+ * form高阶组件包装start
+ * */
 const createFormOption = {
     mapPropsToFields(props) {
         //此步骤在初始化数据的时候将store中的数据映射给form
@@ -38,9 +92,15 @@ const createFormOption = {
     },
 }
 //经过FORM HOC的处理
-const CreateWithForm = Form.create(createFormOption)(CreateComponents)
+const CreateWithForm = Form.create(createFormOption)(Create)
+/**
+ * form高阶组件包装end
+ * */
 
 
+/**
+* connect链接redux
+*/
 // 映射State和dispatch代码
 const mapStateToProps = (state, ownProps) => {
     return {

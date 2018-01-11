@@ -66,22 +66,6 @@ const Topics = ({ match }) => (
     )}/>
   </div>
 )
-//路由配置
-const routes = [
-  { path: '/home',
-    exact: true,
-    sidebar: () => <div>Home!</div>,
-    main: () =>Home
-  },
-  { path: '/about',
-    sidebar: () => <div>About!</div>,
-    main: () =>About
-  },
-  { path: '/topics',
-    sidebar: () => <div>shoelaces!</div>,
-    main: () =>Topics
-  }
-]
 /**
  * 页面布局组件
  */
@@ -98,17 +82,11 @@ export default class MainLayout extends React.Component {
   onCollapse(collapsed) {
     this.setState({ collapsed });
   }
-  onCollapseMenu(){
-  }
-  componentDidUpdate(){
-  }
-  componentDidMount(){
-  }
   render() {
     let BreadcrumbItem = this.props.location.hash.replace(/\#\//,"").split("/").map((element,i) => (
           <Breadcrumb.Item key={i}>{element}</Breadcrumb.Item>
         ))
-    let {match} = this.props;
+    const {match} = this.props;
     const links = [{
       title: '帮助',
       href: '',
@@ -122,6 +100,9 @@ export default class MainLayout extends React.Component {
     }];
     
     const copyright = <div>Copyright <Icon type="copyright" /> sealing system form accenture</div>;
+   
+    let pathKey = ['home']
+    console.log("sdfsdf",this.props)
     return (
         <Layout style={{ minHeight: '100vh' }}>
           
@@ -133,31 +114,19 @@ export default class MainLayout extends React.Component {
             onCollapse={this.onCollapse.bind(this)}
           >
             <div className="logo" style={{lineHeight:"64px",textAlign:"center",color:"#fff"}}>Sealing System</div>
-            <Menu ref = {(menu)=>{this.menu = menu}} theme="dark" defaultSelectedKeys={[match.params.id]} mode="inline">
+            <Menu ref = {(menu)=>{this.menu = menu}} theme="dark" defaultSelectedKeys={pathKey} mode="inline">
               <Menu.Item key={"home"}>
-              <Link to={"/home"}>
+              <Link to={`${match.url}/home`}>
                   <Icon type="pie-chart" />
                   <span>Home</span>
               </Link>
               </Menu.Item>
               <Menu.Item key={"create"}>
-              <Link replace={true} to={"/create"}>
+              <Link replace={true} to={`${match.url}/create`}>
                   <Icon type="desktop" />
                   <span>create</span>
                </Link>
               </Menu.Item>
-            
-              <SubMenu
-                key="sub1"
-                title={
-                <span><Icon type="pie-user"/>
-                    <span>User</span>
-                </span>}
-              >
-                <Menu.Item key="3">Tom</Menu.Item>
-                <Menu.Item key="4">Bill</Menu.Item>
-                <Menu.Item key="5">Alex</Menu.Item>
-              </SubMenu>
               <SubMenu
                 key="sub2"
                 title={<span><Icon type="team" /><span>Team</span></span>}
@@ -166,7 +135,7 @@ export default class MainLayout extends React.Component {
                 <Menu.Item key="8">Team 2</Menu.Item>
               </SubMenu>
               <Menu.Item key="topics">
-              <Link to="/topics">
+              <Link to={`${match.url}/topics`}>
                   <Icon type="file" />
                   <span>topics</span>
                 </Link>
@@ -218,9 +187,9 @@ export default class MainLayout extends React.Component {
               {/* 内容 */}
               <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
                     {/* 路由的父子组件path可以一样，如果一样的话则由父层至子层组件逐级加载 */}
-                    <Route path={"/home"} component={Home}/>
-                    <Route path={"/create"} component={Create}/>
-                    <Route path={"/topics"} component={Topics}/>
+                    <Route path={`${match.url}/home`} component={Home}/>
+                    <Route path={`${match.url}/create`} component={Create}/>
+                    <Route path={`${match.url}/topics`} component={Topics}/>
               </div>
             </Content>
             <Footer style={{ textAlign: 'center' }}>

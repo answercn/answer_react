@@ -24,10 +24,6 @@ export default class Home extends React.Component {
       console.log("createdata in home",this.props.createData);
       this.isEdit = false;
   }
-
-  updataHomeAllData(){
-  
-  }
   componentDidMount(){
     let promiseInit = new Promise((resolve,reject)=>{
       this.props.actions.initHomeData(()=>{
@@ -58,7 +54,7 @@ export default class Home extends React.Component {
       <div>
           <AdvancedSearchForm isEdit = {this.isEdit}  {...this.props}/>
           <EditableTable isEdit = {this.isEdit} {...this.props}/>
-          {/* <DivText>{isFinish}</DivText> */}
+          {/* <Route path={'/home/:id'} render={({match})=><div>{match.params.id}</div>}></Route> */}
       </div>
   );
   }

@@ -62,6 +62,9 @@ export default class Notice extends React.Component{
                 width: '400px',
               }}
             >
+              <div style={{display:"inline-block",padding:"0 10px"}}>
+                  <span>{this.props.userData.name}</span>
+              </div>
               <NoticeIcon
                 className="notice-icon"
                 count={noticeDatas.length}
