@@ -1,9 +1,10 @@
 import fetchJsonps from 'fetch-jsonp';
 import { hashHistory } from 'react-router';
 import * as cookie from 'js-cookie';
+require('fetch-detector');
 require('fetch-ie8');
-require('es6-promise').polyfill();
 require('isomorphic-fetch');
+import 'whatwg-fetch';
 //mport '../../node_modules/whatwg-fetch';
 //import Promise from '../../node_modules/promise-polyfill';
 console.log(cookie)
@@ -16,12 +17,12 @@ const fetchCore =  function (type,url,param,callback,errorCb) {
             return
         }
         //参数设置
-        let body = undefined;
+        let params = undefined;
         if (method === 'GET') {
             // fetch的GET不允许有body，参数只能放在url中
-            body = undefined;
+            params = undefined;
           } else {
-            body = body && JSON.stringify(body);
+            params = param && JSON.stringify(param);
           }
         //基本url设置
         const doUrl = httpServerBasePath + url
@@ -35,7 +36,7 @@ const fetchCore =  function (type,url,param,callback,errorCb) {
                 'Authorization': token,
                 'Accept': 'application/json'
             }, 
-            body, // 请求发送的数据 blob、BufferSource、FormData、URLSearchParams（get或head方法中不能包含body）
+            data:params, // 请求发送的数据 blob、BufferSource、FormData、URLSearchParams（get或head方法中不能包含body）
             cache : 'default', // 是否缓存这个请求
             credentials : 'include', //要不要携带 cookie 默认不携带 omit、same-origin 或者 include
             mode : "cors", 

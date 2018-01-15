@@ -8,7 +8,7 @@ import * as user from '../util/User.jsx'
 
 export const loginIn = function(value,history,location){
   debugger
-  let pathname = '/main/home';
+  let pathname = '/home';
   if(location&&location.search){
     pathname = location.search.split("?")[1].split("=")[1]
   }
@@ -23,8 +23,8 @@ export const loginIn = function(value,history,location){
 }
 export const loginOut = function(value,history,location){
   debugger
-  let pathname = '/main/home';
-  if(location&&location.pathname){
+  let pathname = '/home';
+  if(location&&location.pathname&&location.pathname!='/login'){
     pathname = location.pathname
   }
   return (dispatch,getState)=>{

@@ -1,11 +1,12 @@
 import * as cookie from 'js-cookie';
 import {fetchPost,httpServerBasePath} from './Quest.jsx'
+require('fetch-detector');
 require('fetch-ie8');
-require('es6-promise').polyfill();
 require('isomorphic-fetch');
+import 'whatwg-fetch';
 const login = (data, history, nextPathname, callback) => {
     let loginMessage = "";
-    let body = {
+    let param = {
         username:data.username,
         password:data.password
     }
@@ -18,7 +19,7 @@ const login = (data, history, nextPathname, callback) => {
             'Accept': 'application/json'
         }, 
         mode: 'cors',
-        body, // 请求发送的数据 blob、BufferSource、FormData、URLSearchParams（get或head方法中不能包含body）
+        data:param, // 请求发送的数据 blob、BufferSource、FormData、URLSearchParams（get或head方法中不能包含body）
         cache : 'default', // 是否缓存这个请求
         credentials : 'include', //要不要携带 cookie 默认不携带 omit、same-origin 或者 include
     }).then(res => {

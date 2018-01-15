@@ -48,8 +48,27 @@ module.exports = {
                 }
             },{ 
                 test: /\.js$/,
-                exclude: /node_modules/,
-                loader: 'babel-loader'
+                loader: './node_modules/babel-loader',//装载的哪些模块
+                exclude: /node_modules\/(?!babel-runtime)/,
+                //exclude: /node_modules/,//标示不变异node_modules文件夹下面的内容
+                query: {//具体的编译的类型，
+                    //compact: false,//表示不压缩
+                    "presets": [ 
+                        "es2015", 
+                        "stage-1", 
+                        "react"
+                    ],
+                    //按需加载antd组件，否则为压缩文件将有4M大小
+                    "plugins": [
+                        [
+                            "import", {
+                                "libraryName": "antd",
+                                "libraryDirectory": "lib",
+                                "style": true
+                            }
+                        ]
+                    ]
+                }
             },
             //打包css文件时使用
             // {  
@@ -115,6 +134,10 @@ module.exports = {
                 // loader: 'bundle-loader?lazy'
                 loaders: ['bundle-loader?lazy', 'babel-loader']
               }
+            //   {
+            //     test: require.resolve('jquery'),  // 此loader配置项的目标是NPM中的jquery
+            //     loader: 'expose?$!expose?jQuery', // 先把jQuery对象声明成为全局变量`jQuery`，再通过管道进一步又声明成为全局变量`$`
+            //   }
         ]
     },
 	resolve: {  
@@ -134,7 +157,10 @@ module.exports = {
             "redux-logger":path.resolve(__dirname,'./node_modules/redux-logger'),
             "redux-thunk":path.resolve(__dirname,'./node_modules/redux-thunk'),
             "rc-form":path.resolve(__dirname,'./node_modules/rc-form'),
-            "moment":path.resolve(__dirname,'./node_modules/moment')
+            "moment":path.resolve(__dirname,'./node_modules/moment'),
+            'fetch-ie8':path.resolve(__dirname,'./node_modules/moment'),
+            'es6-promise':path.resolve(__dirname,'./node_modules/es6-promise'),
+            'isomorphic-fetch':path.resolve(__dirname,'./node_modules/isomorphic-fetch')
         }  
     },  
     plugins: [
@@ -173,5 +199,11 @@ module.exports = {
     new ExtractTextPlugin({
         filename: 'main.css'
     })
+    // new webpack.ProvidePlugin({
+    //     $: 'jquery',
+    //     jQuery: 'jquery',
+    //     'window.jQuery': 'jquery',
+    //     'window.$': 'jquery',
+    // })
     ]
 };

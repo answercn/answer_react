@@ -31,7 +31,7 @@ const WrapLoginForm = Form.create()(Login);
 //关联redux
 const mapStateToProps = (state, ownProps) => {
     return {
-     
+        userData:state.user.userData
     }
 }
 

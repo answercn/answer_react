@@ -1,5 +1,13 @@
 //require( "../node_modules/antd/dist/antd.less");
+import 'babel-polyfill';
+import Promise from 'promise-polyfill';
+ 
+// To add to window
+if (!window.Promise) {
+  window.Promise = Promise;
+}
 require( "./less/main.less");
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import IndexPage from './components/IndexPage.jsx';
