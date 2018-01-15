@@ -1,21 +1,44 @@
 import fetchJsonps from 'fetch-jsonp';
-require('../../node_modules/es6-promise').polyfill();
-require('../../node_modules/isomorphic-fetch');
+import { hashHistory } from 'react-router';
+import * as cookie from 'js-cookie';
+require('fetch-ie8');
+require('es6-promise').polyfill();
+require('isomorphic-fetch');
 //mport '../../node_modules/whatwg-fetch';
 //import Promise from '../../node_modules/promise-polyfill';
-
-
+console.log(cookie)
+const httpServerBasePath = 'http://localhost:8001';
 const fetchCore =  function (type,url,param,callback,errorCb) {
-        return fetch(url,{ // url: 请求地址
+        //token获取
+        const token = cookie.get('access_token');
+        if(!token){
+            window.location.href = httpServerBasePath + '/public/index.html#/login';
+            return
+        }
+        //参数设置
+        let body = undefined;
+        if (method === 'GET') {
+            // fetch的GET不允许有body，参数只能放在url中
+            body = undefined;
+          } else {
+            body = body && JSON.stringify(body);
+          }
+        //基本url设置
+        const doUrl = httpServerBasePath + url
+
+        return fetch(
+            doUrl,
+            { // url: 请求地址
             method: type, // 请求的方法POST/GET等
             headers : { // 请求头（可以是Headers对象，也可是JSON对象）
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': token,
                 'Accept': 'application/json'
             }, 
-            body:param, // 请求发送的数据 blob、BufferSource、FormData、URLSearchParams（get或head方法中不能包含body）
+            body, // 请求发送的数据 blob、BufferSource、FormData、URLSearchParams（get或head方法中不能包含body）
             cache : 'default', // 是否缓存这个请求
             credentials : 'include', //要不要携带 cookie 默认不携带 omit、same-origin 或者 include
-            mode : "", 
+            mode : "cors", 
             /*  
                 mode,给请求定义一个模式确保请求有效
                 same-origin:只在请求同域中资源时成功，其他请求将被拒绝（同源策略）
@@ -24,7 +47,7 @@ const fetchCore =  function (type,url,param,callback,errorCb) {
                 no-cors : 目前不起作用（默认）
     
             */
-        }).then(resp => {
+        }).then(res => {
             /*
                 Response 实现了 Body, 可以使用 Body 的 属性和方法:
     
@@ -51,7 +74,18 @@ const fetchCore =  function (type,url,param,callback,errorCb) {
                 resp.text() // 返回一个被解析为 Text 格式的promise对象
             */ 
             //resp.status === 200
-            if(resp.ok) return resp.json();
+            if (res.status === 401) {
+                let pathname = window.location.hash;
+                pathname.replace(/#/gi,"");
+                hashHistory.push('/login?returnPath=' + pathname);
+                return Promise.reject('Unauthorized.');
+              } else {
+                const token = res.headers.get('current-user');
+                if (token) {
+                    cookie.set('current-user', token);
+                }
+                return res.json();
+              }
             // 注： 这里的 resp.json() 返回值不是 js对象，通过 then 后才会得到 js 对象
             throw new Error ('false of json');
         }).then(json => {
@@ -79,7 +113,15 @@ const  fetchJsonp = function(...arg){
       console.log('parsing failed', ex)
     })
 }
+
+//检查并获取token
+const checkAndGetToken = function(){
+   
+    
+    return false
+}
 export {
+    httpServerBasePath,
     fetchGet,
     fetchPost,
     fetchJsonp

@@ -16,7 +16,7 @@ export  class LoginForm extends React.Component {
                 {/* <Col span={8}></Col> */}
                 <Col span={6}>
                     <div className="login-box-form">
-                        <Form id="login-form" justify="center" align="middle" onSubmit={this.props.handleSubmit} className="login-form">
+                        <Form id="login-form" onSubmit={this.props.handleSubmit} className="login-form">
                                 <FormItem>
                                 {getFieldDecorator('userName', {
                                     rules: [{ required: true, message: 'Please input your username!' }],

@@ -45,12 +45,12 @@ class Basic extends React.Component {
           const supportsHistory = 'pushState' in window.history;
           return (
             <Provider store={store}>
-               {/* <HashRouter forceRefresh={!supportsHistory} keyLength={12}>
-                    <Route path="/" component={MainLayout}/>
-                </HashRouter> */}
-                <ConnectedRouter history={history}>
-                    <Route path="/" component={IndexPage}/>
-                </ConnectedRouter>
+                  {/* <HashRouter forceRefresh={!supportsHistory} keyLength={12}>
+                        <Route path="/" component={MainLayout}/>
+                    </HashRouter> */}
+                    <ConnectedRouter history={history}>
+                        <Route path="/" component={IndexPage}/>
+                    </ConnectedRouter>
             </Provider>
           )
       }

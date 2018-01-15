@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import GlobalFooter from 'ant-design-pro/lib/GlobalFooter';
+import * as user from '../util/User.jsx';
 import { Layout, Menu, Breadcrumb, Icon,Row,Col } from 'antd';
 const { Header, Content, Footer, Switch ,Sider } = Layout;
 const SubMenu = Menu.SubMenu;
@@ -10,7 +11,8 @@ import {
   Route,
   Link,
   NavLink,
-  Redirect
+  Redirect,
+  Switch as RouterSwitch
 } from 'react-router-dom'
 
 //包装好的处理按需加载的组件
@@ -79,6 +81,12 @@ export default class MainLayout extends React.Component {
       selectKey:"home"
     }
   }
+  componentWillMount(){
+      debugger
+      if (!user.isLogin()) {
+        this.props.history.push('/login', null);
+      }
+    }
   onCollapse(collapsed) {
     this.setState({ collapsed });
   }
@@ -99,30 +107,29 @@ export default class MainLayout extends React.Component {
       blankTarget: true,
     }];
     
-    const copyright = <div>Copyright <Icon type="copyright" /> sealing system form accenture</div>;
-   
-    let pathKey = ['home']
-    console.log("sdfsdf",this.props)
-    return (
+    const copyright = <div>Copyright <Icon type="copyright" /> sealing system</div>;
+    //let pathKey = this.props.location.pathname.split("/")[2]||"home"
+    let pathKey = this.props.match.params.pagename||"home";
+    console.log("MainLayout props",this.props)
+    if(user.isLogin()){
+      return (
         <Layout style={{ minHeight: '100vh' }}>
-          
           <Layout>
-         
           <Sider
             collapsible
             collapsed={this.state.collapsed}
             onCollapse={this.onCollapse.bind(this)}
           >
             <div className="logo" style={{lineHeight:"64px",textAlign:"center",color:"#fff"}}>Sealing System</div>
-            <Menu ref = {(menu)=>{this.menu = menu}} theme="dark" defaultSelectedKeys={pathKey} mode="inline">
+            <Menu ref = {(menu)=>{this.menu = menu}} theme="dark" defaultSelectedKeys={[pathKey]} mode="inline">
               <Menu.Item key={"home"}>
-              <Link to={`${match.url}/home`}>
+              <Link to={`/home`}>
                   <Icon type="pie-chart" />
                   <span>Home</span>
               </Link>
               </Menu.Item>
               <Menu.Item key={"create"}>
-              <Link replace={true} to={`${match.url}/create`}>
+              <Link replace={true} to={`/create`}>
                   <Icon type="desktop" />
                   <span>create</span>
                </Link>
@@ -135,7 +142,7 @@ export default class MainLayout extends React.Component {
                 <Menu.Item key="8">Team 2</Menu.Item>
               </SubMenu>
               <Menu.Item key="topics">
-              <Link to={`${match.url}/topics`}>
+              <Link to={`/topics`}>
                   <Icon type="file" />
                   <span>topics</span>
                 </Link>
@@ -174,7 +181,7 @@ export default class MainLayout extends React.Component {
                         </Menu>
                     </Col>
                     <Col span={8}>
-                        <NoticeContainer/>
+                        <NoticeContainer {...this.props}/>
                     </Col>
               </Row>
           </Header>
@@ -187,19 +194,25 @@ export default class MainLayout extends React.Component {
               {/* 内容 */}
               <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
                     {/* 路由的父子组件path可以一样，如果一样的话则由父层至子层组件逐级加载 */}
-                    <Route path={`${match.url}/home`} component={Home}/>
-                    <Route path={`${match.url}/create`} component={Create}/>
-                    <Route path={`${match.url}/topics`} component={Topics}/>
+                    <RouterSwitch>
+                      <Route path={`/home`} component={Home}/>
+                      <Route path={`/create`} component={Create}/>
+                      <Route path={`/topics`} component={Topics}/>
+                      <Redirect to="/404"/>
+                    </RouterSwitch>
               </div>
             </Content>
             <Footer style={{ textAlign: 'center' }}>
                 <GlobalFooter links={links} copyright={copyright} />
             </Footer>
-            
           </Layout>
           </Layout>
         </Layout>
-       
-    );
+    )}else{
+      return (
+      <div>
+          <span><Link to={"/login"}>点此登陆</Link></span>
+      </div>);
+    }
   }
 }

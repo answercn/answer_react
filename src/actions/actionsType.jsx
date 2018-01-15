@@ -1,3 +1,6 @@
+export const LOGIN_IN = "LOGIN_IN";
+export const LOGIN_OUT = "LOGIN_OUT";
+
 export const INIT_HOME_DATA = "INIT_HOME_DATA";
 export const SAVE_FINISH = "SAVE_FINISH";
 export const ADD_ROWDATA = "ADD_ROWDATA";

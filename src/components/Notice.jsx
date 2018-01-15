@@ -22,6 +22,11 @@ export default class Notice extends React.Component{
     onClear(tabTitle) {
         console.log(tabTitle);
     }
+    handleLoginOut(){
+      let { actions,history,location,userData } = this.props;
+      debugger
+      actions.loginOut(userData,history,location)
+    }
     getNoticeData(notices) {
         if (notices.length === 0) {
             return {};
@@ -64,6 +69,9 @@ export default class Notice extends React.Component{
             >
               <div style={{display:"inline-block",padding:"0 10px"}}>
                   <span>{this.props.userData.name}</span>
+              </div>
+              <div style={{display:"inline-block",padding:"0 10px"}}>
+                  <span onClick={this.handleLoginOut.bind(this)} style={{cursor:"pointer"}}>login out</span>
               </div>
               <NoticeIcon
                 className="notice-icon"
