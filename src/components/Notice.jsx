@@ -24,7 +24,6 @@ export default class Notice extends React.Component{
     }
     handleLoginOut(){
       let { actions,history,location,userData } = this.props;
-      debugger
       actions.loginOut(userData,history,location)
     }
     getNoticeData(notices) {

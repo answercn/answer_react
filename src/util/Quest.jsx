@@ -7,8 +7,7 @@ require('isomorphic-fetch');
 import 'whatwg-fetch';
 //mport '../../node_modules/whatwg-fetch';
 //import Promise from '../../node_modules/promise-polyfill';
-console.log(cookie)
-const httpServerBasePath = 'http://localhost:8001';
+const httpServerBasePath = window.location.protocol+"//"+window.location.host;
 const fetchCore =  function (type,url,param,callback,errorCb) {
         //token获取
         const token = cookie.get('access_token');

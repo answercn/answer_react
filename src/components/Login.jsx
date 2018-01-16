@@ -5,14 +5,13 @@ import * as user from '../util/User.jsx';
 import { Form, Icon, Input, Button, Checkbox,Row,Col} from 'antd';
 const FormItem = Form.Item;
 import Result from 'ant-design-pro/es/Result';
-require('../less/login.less');
+import {LoginBanner} from './LoginBanner.jsx'
 export  class LoginForm extends React.Component {
     constructor(props){
         super(props);
     }
     handleLoginOut(){
         let { actions,history,location,userData } = this.props;
-        debugger
         actions.loginOut(userData,history,location)
     }
     render() {
@@ -20,21 +19,30 @@ export  class LoginForm extends React.Component {
         if(!user.isLogin()){
             return (
                 <div id="login-box">
-                <Row type="flex" justify="space-around">
+                <Row type="flex">
+                    <Col xs={{ span: 24}} lg={{ span: 6, offset:2 }}>
+                           <LoginBanner/>
+                    </Col>
                     {/* <Col span={8}></Col> */}
-                    <Col span={6}>
+                    <Col xs={{ span: 24}} lg={{ span: 6, offset:6 }}>
                         <div className="login-box-form">
                             <Form id="login-form" onSubmit={this.props.handleSubmit} className="login-form">
                                     <FormItem>
                                     {getFieldDecorator('userName', {
-                                        rules: [{ required: true, message: 'Please input your username!' }],
+                                        rules: [
+                                            { required: true, message: 'Please input your username!' },
+                                            { validator:this.props.usernameCheck }
+                                        ],
                                     })(
                                         <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />
                                     )}
                                     </FormItem>
                                     <FormItem>
                                     {getFieldDecorator('password', {
-                                        rules: [{ required: true, message: 'Please input your Password!' }],
+                                        rules: [
+                                            { required: true, message: 'Please input your Password!' },
+                                            { validator:this.props.passwordCheck }
+                                        ],
                                     })(
                                         <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
                                     )}

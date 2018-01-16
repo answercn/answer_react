@@ -96,7 +96,7 @@ export default class Create extends React.Component {
               {getFieldDecorator('size', {
                   rules: [
                     {  required: true, message: 'size is required!' },
-                    { validator: this.sizeCheck }
+                    { validator: this.props.sizeCheck }
                   ]
                  
               })(<Input />)}

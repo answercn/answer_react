@@ -1,22 +1,64 @@
+@login-bgColor:#fff;
+@login-box-bgColor:#001529;
+.onePersentHw(){
+    @width:  100%;
+    @height: 100%;
+}
+.marginTop50{
+    margin-top:50%; 
+}
+.borderRadius{
+    border-radius: 25px;
+}
+.bottomleftrighttopZero{
+    position: relative;
+    bottom: 0;
+    top:0;
+    left:0;
+    right:0;
+}
+body{
+    background:@login-box-bgColor;
+}
 #login-box{
-    
-    height:100%;
-    width:100%
+    .onePersentHw();
+    height:@width;
+    width:@height;
 }
 #login-box .login-box-form{
     position: relative;
-    top: -100px;
-    margin-top:50%!important;
-    padding: 20px;
-    box-shadow: 1px 1px 10px #999
+    .marginTop50;
+    padding: 20px 50px;
+    box-shadow: 1px 1px 10px #999;
+    background: @login-bgColor;
+    .borderRadius;
+    max-width: 400px;
+    max-height: 350px;
 }
-#login-form .login-form {
-max-width: 300px;
 
-}
 #login-form .login-form-forgot {
-float: right;
+    float: right;
 }
 #login-form .login-form-button {
-width: 100%;
+    width: 100%;
+}
+.LoginBannerBox{
+    width:700px;
+    height:310px;
+    .marginTop50;
+    background-image: url("//img.alicdn.com/tfs/TB1rcuESFXXXXbOXXXXXXXXXXXX-1289-328.png");position: absolute; display: block; left: 0px; top: 0px; transform: translate3d(2.7px, -14.0528px, 0px); transform-style: preserve-3d; backface-visibility: hidden;
+    .borderRadius;
+    text-align: center;
+    .LoginBanner{
+        position: relative;
+        h1{
+            color:@login-bgColor;
+            position: absolute;
+            top:180px;
+            left:150px;
+            z-index: 99;
+            font-size: 3rem
+        }
+        
+    }
 }

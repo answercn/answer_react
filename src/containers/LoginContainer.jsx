@@ -20,12 +20,28 @@ class Login extends React.Component{
             this.props.actions.loginIn(values,this.props.history,this.props.location)
           }
         });
-      }
-      render(){
-          return (
-              <LoginForm {...this.props} handleSubmit={this.handleSubmit.bind(this)}/>
-          )
-      }
+    }
+    usernameCheck(rule, values, callback){
+        //该方法为自定义实时校验，错误信息作为callback的参数传递进去
+        if(values&&values.length<8){
+            callback("不能小于8位")
+        }else{
+            callback()
+        }
+    }
+    passwordCheck(rule, values, callback){
+        //该方法为自定义实时校验，错误信息作为callback的参数传递进去
+        if(values&&values.length<8){
+            callback("不能小于8位")
+        }else{
+            callback()
+        }
+    }
+    render(){
+        return (
+            <LoginForm {...this.props} passwordCheck={this.passwordCheck.bind(this)} usernameCheck={this.usernameCheck.bind(this)} handleSubmit={this.handleSubmit.bind(this)}/>
+        )
+    }
 }
 const WrapLoginForm = Form.create()(Login);
 //关联redux

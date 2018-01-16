@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import GlobalFooter from 'ant-design-pro/lib/GlobalFooter';
+import GlobalFooter from 'ant-design-pro/es/GlobalFooter';
 import * as user from '../util/User.jsx';
 import { Layout, Menu, Breadcrumb, Icon,Row,Col } from 'antd';
 const { Header, Content, Footer, Switch ,Sider } = Layout;
@@ -82,7 +82,6 @@ export default class MainLayout extends React.Component {
     }
   }
   componentWillMount(){
-      debugger
       if (!user.isLogin()) {
         this.props.history.push('/login', null);
       }
@@ -125,13 +124,13 @@ export default class MainLayout extends React.Component {
               <Menu.Item key={"home"}>
               <Link to={`/home`}>
                   <Icon type="pie-chart" />
-                  <span>Home</span>
+                  <span>列表</span>
               </Link>
               </Menu.Item>
               <Menu.Item key={"create"}>
               <Link replace={true} to={`/create`}>
                   <Icon type="desktop" />
-                  <span>create</span>
+                  <span>创建</span>
                </Link>
               </Menu.Item>
               <SubMenu
@@ -175,9 +174,9 @@ export default class MainLayout extends React.Component {
                           defaultSelectedKeys={['2']}
                           style={{ lineHeight: '64px' }}
                         >
-                          <Menu.Item key="1">nav 1</Menu.Item>
-                          <Menu.Item key="2">nav 2</Menu.Item>
-                          <Menu.Item key="3">nav 3</Menu.Item>
+                          <Menu.Item key="1">管理</Menu.Item>
+                          <Menu.Item key="2">检查</Menu.Item>
+                          <Menu.Item key="3">控制</Menu.Item>
                         </Menu>
                     </Col>
                     <Col span={8}>

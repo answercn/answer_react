@@ -22,48 +22,11 @@ module.exports = {
                 test: /\.jsx$/,//表示要变异的文件的类型，这里要编译的是js文件
                 loader: './node_modules/babel-loader',//装载的哪些模块
                 exclude: /node_modules/,//标示不变异node_modules文件夹下面的内容
-                query: {//具体的编译的类型，
-                    //compact: false,//表示不压缩
-                    "presets": [ 
-                        "es2015", 
-                        "stage-1", 
-                        "react"
-                    ],
-                    //按需加载antd组件，否则为压缩文件将有4M大小
-                    "plugins": [
-                        "transform-runtime",
-                        [
-                            "import", {
-                                "libraryName": "antd",
-                                "libraryDirectory": "lib",
-                                "style": true
-                            }
-                        ]
-                    ]
-                }
             },{ 
                 test: /\.js$/,
                 loader: './node_modules/babel-loader',//装载的哪些模块
                 exclude: /node_modules\/(?!babel-runtime)/,
                 //exclude: /node_modules/,//标示不变异node_modules文件夹下面的内容
-                query: {//具体的编译的类型，
-                    //compact: false,//表示不压缩
-                    "presets": [ 
-                        "es2015", 
-                        "stage-1", 
-                        "react"
-                    ],
-                    //按需加载antd组件，否则为压缩文件将有4M大小
-                    "plugins": [
-                        [
-                            "import", {
-                                "libraryName": "antd",
-                                "libraryDirectory": "lib",
-                                "style": true
-                            }
-                        ]
-                    ]
-                }
             },
             {
                 //此处Less不跟.css一起，否则编译器无法编译@

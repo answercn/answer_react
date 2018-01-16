@@ -1,0 +1,18 @@
+{//具体的编译的类型，
+        //compact: false,//表示不压缩
+        "presets": [ 
+            "es2015", 
+            "stage-1", 
+            "react"
+        ],
+        //按需加载antd组件，否则为压缩文件将有4M大小
+        "plugins": [
+            [
+                "import", {
+                    "libraryName": "antd",
+                    "libraryDirectory": "lib",
+                    "style": true
+                }
+            ]
+        ]
+}

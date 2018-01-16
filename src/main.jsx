@@ -6,6 +6,9 @@ import Promise from 'promise-polyfill';
 if (!window.Promise) {
   window.Promise = Promise;
 }
+//打印环境变量
+console.warn("ENV >>>>>>>>>>>>>>>>>>",process.env.NODE_ENV);
+
 require( "./less/main.less");
 
 import React from 'react';
@@ -35,14 +38,32 @@ const initialState = {
       }
 }
 //创建日志
-const logger = createLogger();
 // Create a history of your choosing (we're using a browser history in this case)
 const history = createHistory()
-
 // Build the middleware for intercepting and dispatching navigation actions
-const middleware = routerMiddleware(history)
+const middleware = routerMiddleware(history);
 
-const store = createStore(indexReducer,initialState,applyMiddleware(thunk,logger,middleware));
+let logger;
+let middlewareResult;
+
+if(process.env.NODE_ENV === "development"){
+  logger = createLogger();
+  middlewareResult = applyMiddleware(thunk,logger,middleware);
+}else{
+  middlewareResult = applyMiddleware(thunk,middleware);
+}
+   
+
+let store;
+if(!(window.__REDUX_DEVTOOLS_EXTENSION__ || window.__REDUX_DEVTOOLS_EXTENSION__)){
+  store = createStore(indexReducer,initialState,middlewareResult);
+}else{
+  //插件调试，未安装会报错
+  store = createStore(indexReducer,initialState,middlewareResult,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+}
+
+
+
   //入口根部组件
 class Basic extends React.Component {
       componentDidMount(){

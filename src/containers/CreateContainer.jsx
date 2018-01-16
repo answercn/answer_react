@@ -22,7 +22,7 @@ class Create extends React.Component{
         }else{
           callback()
         }
-      }
+    }
       handleSubmit = (e) => {
         e.preventDefault();
         //表单数据校验
@@ -30,33 +30,29 @@ class Create extends React.Component{
           if (err) {
             return;
           }
-          console.log('Received values of form: ', fieldsValue.size);
-         
-         
           this.props.actions.ceateSave(fieldsValue);
         });
-      }
-      componentDidUpdate(){
-      
-      }
-      componentDidMount(){
+    }
+    componentDidUpdate(){
+    
+    }
+    componentDidMount(){
         //可在此处通过该方法将带过来的值或者请求来的值设置到form中
         this.props.form.setFieldsValue({productname:"B",country:"use"})
-      }
-      componentWillReceiveProps(nextprops){
-       
-      }
-      handleCountryChange = (value) => {
-        console.log(value);
+    }
+    componentWillReceiveProps(nextprops){
+    
+    }
+    handleCountryChange = (value) => {
         this.props.form.setFieldsValue({
-          countryCode: `Hi, ${value === 'china' ? value : ""}!`,
+            countryCode: `Hi, ${value === 'china' ? value : ""}!`,
         });
-      }
-      render(){
-          return(
-            <CreateComponents handleSubmit={this.handleSubmit.bind(this)} handleCountryChange={this.handleCountryChange.bind(this)} {...this.props}/>
-          )
-      }
+    }
+    render(){
+        return(
+            <CreateComponents sizeCheck={this.sizeCheck.bind(this)} handleSubmit={this.handleSubmit.bind(this)} handleCountryChange={this.handleCountryChange.bind(this)} {...this.props}/>
+        )
+    }
 }
 
 /**
