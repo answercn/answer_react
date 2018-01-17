@@ -39,7 +39,7 @@ export default class EditableTable extends React.Component {
         dataIndex: 'operation',
         render: (text, record) => {
           return (
-            this.props.tableDataSource.length > 1 ?
+            this.props.tableDataSource.dataSource.length > 1 ?
             (
               <Popconfirm title="Sure to delete?" onConfirm={() => this.onDelete(record.key)}>
                 <a href="#">Delete</a>
@@ -67,9 +67,8 @@ export default class EditableTable extends React.Component {
       history.push({pathname:`/create`,state:{status:"from home"}})
     }
     onDelete = (key) => {
-      const dataSource = [...this.props.tableDataSource];
-      Object.assign(this.props.tableDataSource,{ dataSource: dataSource.filter(item => item.key !== key) });
-    }
+      this.props.deleteRow(key)
+   }
     closeCb(){
       console.log(this.Alert)
     }
@@ -77,10 +76,11 @@ export default class EditableTable extends React.Component {
     
     }
     componentWillReceiveProps(nextProps){
-      if(nextProps.isEdit==this.state.isEdit) return
-      this.setState({
-        isEdit:nextProps.isEdit
-      })
+      debugger
+     // if(nextProps.isEdit==this.state.isEdit) return
+        this.setState({
+          isEdit:nextProps.isEdit
+        })
     }
     handleSave(){
       const {isFinish,tableDataSource,actions} = this.props;

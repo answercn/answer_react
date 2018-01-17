@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { createForm, createFormField } from 'rc-form';
+import schema from 'async-validator';
 import CreateComponents from '../components/Create.jsx';
 import * as allActions from "../actions/createAction.jsx"
 import { Form, DatePicker, TimePicker, Button } from 'antd';
@@ -14,23 +15,27 @@ const RangePicker = DatePicker.RangePicker;
 class Create extends React.Component{
     constructor(...props){
         super(...props);
-      }
+    }
     sizeCheck(rule, values, callback){
         //该方法为自定义实时校验，错误信息作为callback的参数传递进去
         if(values&&values<10){
-          callback("不能小于十")
+          callback("不能小于十");//只要callback中放置内容就会走error，return无效，return只能不让代码继续执行
         }else{
-          callback()
+          callback()//callback必须执行，不传参数给callback视为通过验证
         }
     }
-      handleSubmit = (e) => {
+    handleSubmit = (e) => {
+        debugger
         e.preventDefault();
         //表单数据校验
         this.props.form.validateFields((err, fieldsValue) => {
+            console.log(err)
           if (err) {
             return;
           }
+         fieldsValue['date-time-picker'].format('YYYY-MM-DD HH:mm:ss'),
           this.props.actions.ceateSave(fieldsValue);
+          
         });
     }
     componentDidUpdate(){
@@ -38,14 +43,14 @@ class Create extends React.Component{
     }
     componentDidMount(){
         //可在此处通过该方法将带过来的值或者请求来的值设置到form中
-        this.props.form.setFieldsValue({productname:"B",country:"use"})
+        this.props.form.setFieldsValue({country:"use",testEnter:"testcontent"})
     }
     componentWillReceiveProps(nextprops){
     
     }
     handleCountryChange = (value) => {
         this.props.form.setFieldsValue({
-            countryCode: `Hi, ${value === 'china' ? value : ""}!`,
+            countryCode: value === 'china' ? `Hi,${value}!`: "",
         });
     }
     render(){
@@ -80,6 +85,9 @@ const createFormOption = {
         };
     },
     onFieldsChange(props, fields) {
+        
+           
+        //props.form.getFieldInstance(fields.name) // use this to g
         //form所有form的元素发生变化时触发该事件，包括元素的显示隐藏都会触发
         //props.actions.onChangeValue(fields);
     },

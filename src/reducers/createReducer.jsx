@@ -4,6 +4,7 @@ import moment from 'moment';
 //home对应的初始state数据
 const initialState = {
     createData:{
+        size:111,
         sealingstatus:123,
         productname:"A",
         country:"china",

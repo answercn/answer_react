@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Row,Col, Form, DatePicker, TimePicker, Button,Input,Select } from 'antd';
 import moment from 'moment';
+
 const Option = Select.Option;
 const FormItem = Form.Item;
 const MonthPicker = DatePicker.MonthPicker;
@@ -17,6 +18,11 @@ import {
 export default class Create extends React.Component {
   constructor(...props){
     super(...props);
+  }
+  componentDidUpdate(){
+    console.log("componentDidUpdate",this);
+   
+
   }
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -35,12 +41,17 @@ export default class Create extends React.Component {
     //let dates = moment(this.props.createFormData.date,'YYYY/MM/DD');
     const config = {
       //initialValue:dates,
-      rules: [{ type: 'object', required: true, message: 'Please select time!' }],
+      rules: [{ type: 'object', required: true, message: 'Please select time!' }]
     };
     const rangeConfig = {
       rules: [{ type: 'array', required: true, message: 'Please select time!' }],
     };
     const tableColSize = {xs:24,sm:12,lg:8};
+    
+    //隐藏显示部分字段，根据试点或者其他联动的业务逻辑
+    let {productname,country} = this.props.createData;
+    let productnameHiddenFlag = productname=="A"?true:false;
+    let countryHiddenFlag = country=="china"?true:false;
     return (
       <Form onSubmit={this.props.handleSubmit}>
       <Row>
@@ -50,7 +61,7 @@ export default class Create extends React.Component {
             label="sealingstatus"
           >
             {getFieldDecorator('sealingstatus', {
-                rules: [{ required: true, message: 'Username is required!' }],
+                rules: [{ required: true, message: 'Username is required!' }]
             })(<Input />)}
             </FormItem>
         </Col>
@@ -60,8 +71,8 @@ export default class Create extends React.Component {
             label="productname"
           >
             {getFieldDecorator('productname', {
-                rules: [{ required: true, message: 'Username is required!' }],
-            })(<Input />)}
+                rules: [{ required: true, message: 'Username is required!' }]
+            })(<Input/>)}
           </FormItem>
         </Col>
         <Col {...tableColSize}>
@@ -76,57 +87,61 @@ export default class Create extends React.Component {
         </Col>
         </Row>
         <Row>
-          {this.props.createData.productname=="A"&&
+        <Col {...tableColSize} style={{display:productnameHiddenFlag?"none":"block"}}>
+              <FormItem
+                {...formItemLayout}
+                label="testEnter"
+              >
+                {getFieldDecorator('testEnter', {
+                    rules: [
+                      { required: true, message: 'size is required!' },
+                      { validator: this.props.sizeCheck }
+                    ],
+                    hidden:productnameHiddenFlag
+                  
+                })(<Input/>)}
+                </FormItem>
+              </Col>
             <Col {...tableColSize}>
               <FormItem
                 {...formItemLayout}
-                label="试点输入"
+                label="size"
               >
-                {getFieldDecorator('testEnter', {
-                    rules: [{ required: true, message: 'Username is required!' }],
-                })(<Input />)}
+                {getFieldDecorator('size', {
+                    rules: [
+                      { required: true, message: 'size is required!' },
+                      { validator: this.props.sizeCheck }
+                    ]
+                  
+                })(<Input/>)}
                 </FormItem>
-            </Col>}
-          
-          <Col {...tableColSize}>
-            <FormItem
-              {...formItemLayout}
-              label="size"
-            >
-              {getFieldDecorator('size', {
-                  rules: [
-                    {  required: true, message: 'size is required!' },
-                    { validator: this.props.sizeCheck }
-                  ]
-                 
-              })(<Input />)}
-              </FormItem>
-          </Col>
-          <Col {...tableColSize}>
-            <FormItem
-              {...formItemLayout}
-              label = "country"
-            >
-              {getFieldDecorator('country', {
-                  rules: [{ required: true, message: 'Username is required!' }],
-              })(
-                <Select placeholder="Please select a country" onChange={this.props.handleCountryChange.bind(this)}>
-                  <Option value="china">China</Option>
-                  <Option value="use">U.S.A</Option>
-                </Select>
-              )}
-              </FormItem>
-          </Col>
-            
+              </Col>
+              <Col {...tableColSize}>
+                <FormItem
+                  {...formItemLayout}
+                  label = "country"
+                >
+                  {getFieldDecorator('country', {
+                      rules: [{ required: true, message: 'Username is required!' }]
+                  })(
+                    <Select placeholder="Please select a country" onChange={this.props.handleCountryChange.bind(this)}>
+                      <Option value="china">China</Option>
+                      <Option value="use">U.S.A</Option>
+                    </Select>
+                  )}
+                  </FormItem>
+              </Col>
         </Row>
         <Row>
-          <Col {...tableColSize} style={{display:this.props.createData.country=="china"?"block":"none"}}>
+          <Col {...tableColSize} style={{display:countryHiddenFlag?"none":"block"}}>
             <FormItem
               {...formItemLayout}
               label="countryCode"
             >
               {getFieldDecorator('countryCode', {
                   rules: [{ required: true, message: 'countryCode is required!' }],
+                  hidden:countryHiddenFlag
+                 // hidden:true 弱控，有提醒但是会继续走不放在error里
               })(<Input />)}
               </FormItem>
           </Col>
