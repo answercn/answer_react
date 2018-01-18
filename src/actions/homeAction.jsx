@@ -55,6 +55,13 @@ export const addRow = function(newRowData){
         newRowData
     }
 }
+//增加一行
+export const deleteRow = function(key){
+    return {
+        type : actionsType.DELETE_ROWDATA,
+        key
+    }
+}
 // export const closeFinishTip = function(){
 //     return (dispatch,getState)=>{
 //         setTimeout(()=>{

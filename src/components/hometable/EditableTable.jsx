@@ -39,12 +39,10 @@ export default class EditableTable extends React.Component {
         dataIndex: 'operation',
         render: (text, record) => {
           return (
-            this.props.tableDataSource.dataSource.length > 1 ?
-            (
+            //this.props.tableDataSource.dataSource.length > 1 ?//不允许没有值的时候在此处判断
               <Popconfirm title="Sure to delete?" onConfirm={() => this.onDelete(record.key)}>
                 <a href="#">Delete</a>
               </Popconfirm>
-            ) : null
           );
         },
       }];
@@ -62,13 +60,13 @@ export default class EditableTable extends React.Component {
     }
     //跳转到新增页面
     linkToAddPage = function(history){
-     // let param = "105363748"
+      //let param = "105363748"
       //history.push(`/index/create/${param}`);
       history.push({pathname:`/create`,state:{status:"from home"}})
     }
     onDelete = (key) => {
-      this.props.deleteRow(key)
-   }
+      this.props.actions.deleteRow(key)
+    }
     closeCb(){
       console.log(this.Alert)
     }

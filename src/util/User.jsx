@@ -10,7 +10,8 @@ const login = (data, history, nextPathname, callback) => {
         username:data.username,
         password:data.password
     }
-    fetch(
+    return new Promise((resolve,reject)=>{
+        fetch(
         '/testToken.json',
         { // url: 请求地址
         method: "GET", // 请求的方法POST/GET等
@@ -25,7 +26,7 @@ const login = (data, history, nextPathname, callback) => {
     }).then(res => {
         if (res.status === 401) {
             history.push('/login');
-            return Promise.reject('Unauthorized.');
+            reject('Unauthorized.');
         } else {
             console.log("testToken",res)
             return res.json();
@@ -33,17 +34,17 @@ const login = (data, history, nextPathname, callback) => {
         // 注： 这里的 resp.json() 返回值不是 js对象，通过 then 后才会得到 js 对象
         throw new Error ('false of json');
     }).then(result => {
-        console.log("testToken res",result)
         const data = JSON.parse(result);
                 cookie.set('current-user', data,{ expires: 1 });
-                loginMessage = {name: 'login', value: result.result, remember: data.remember};
-                callback && callback(loginMessage);
-                history.push(nextPathname, null);
+                loginMessage = {name: 'login', value: data.result.token, remember: data.remember};
+                resolve(loginMessage);
+                history.push(nextPathname);
     }).catch(error => {
             const errMessage = error;
                 loginMessage = {err: errMessage};
-                callback && callback(loginMessage);
+                reject(loginMessage);
     })
+})
 }
 const logout = (appSn, callback) => {
     const user = cookie.get('current-user');
