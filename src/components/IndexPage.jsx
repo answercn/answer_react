@@ -19,6 +19,10 @@ import Bundle from "../util/Bundle.jsx"
 //异步加载组件
 import loginContainer from 'bundle-loader?lazy&name=[name]!../containers/LoginContainer.jsx'
 import mainLayoutContainer from 'bundle-loader?lazy&name=[name]!../containers/MainLayoutContainer.jsx'
+
+
+
+
 //组件按需加载
 const Login = (props) => (
   <Bundle load={loginContainer}>
@@ -35,17 +39,18 @@ export default class IndexPage extends React.Component{
         super()
     }
     render(){
+      console.log("guoojihau",this.props)
         return (
             <div>
-              <Switch>
-                  <Route path="/login" component={Login}/>
-                  <Route exact path="/404" component={() => (<div>404</div>)}/> 
-                  {/* main页面公共组件，凡path中包含/main的都会加载MainLayout组件，这也是不把他作为"/"来用的原因 */}
-                  <Route path="/:pagename" component={MainLayout}/>
-                  {/* 重定向至主home页面 */}
-                  <Route exact path="/" render={() => (<Redirect to="/home"/>)}></Route > 
-                  <Route render={() => (<Redirect to="/404"/>)}/> 
-              </Switch>
+                  <Switch>
+                      <Route path="/login" component={Login}/>
+                      <Route exact path="/404" component={() => (<div>404</div>)}/> 
+                      {/* main页面公共组件，凡path中包含/main的都会加载MainLayout组件，这也是不把他作为"/"来用的原因 */}
+                      <Route path="/:pagename" component={MainLayout}/>
+                      {/* 重定向至主home页面 */}
+                      <Route exact path="/" render={() => (<Redirect to="/home"/>)}></Route > 
+                      <Route render={() => (<Redirect to="/404"/>)}/> 
+                  </Switch>
             </div>
         )
     }

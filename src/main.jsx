@@ -16,6 +16,12 @@ import ReactDOM from 'react-dom';
 import IndexPage from './components/IndexPage.jsx';
 import { Provider } from 'react-redux'; 
 import { createStore,applyMiddleware} from 'redux';
+import {IntlProvider, addLocaleData} from 'react-intl';
+import zh_CN from './i18n/zh.jsx';
+import en_US from './i18n/en.jsx';
+import zh from 'react-intl/locale-data/zh';
+import en from 'react-intl/locale-data/en';
+import intl from 'intl';
 import indexReducer from './reducers/indexReducer.jsx';
 import createHistory from 'history/createHashHistory';
 import thunk from 'redux-thunk';
@@ -62,8 +68,8 @@ if(!(window.__REDUX_DEVTOOLS_EXTENSION__ || window.__REDUX_DEVTOOLS_EXTENSION__)
   store = createStore(indexReducer,initialState,middlewareResult,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 }
 
-
-
+//国际化处理
+addLocaleData([...en,...zh]);
   //入口根部组件
 class Basic extends React.Component {
       componentDidMount(){
@@ -74,12 +80,14 @@ class Basic extends React.Component {
           const supportsHistory = 'pushState' in window.history;
           return (
             <Provider store={store}>
-                  {/* <HashRouter forceRefresh={!supportsHistory} keyLength={12}>
-                        <Route path="/" component={MainLayout}/>
-                    </HashRouter> */}
-                    <ConnectedRouter history={history}>
-                        <Route path="/" component={IndexPage}/>
-                    </ConnectedRouter>
+                <IntlProvider locale={'zh'} messages={zh_CN}>
+                    {/* <HashRouter forceRefresh={!supportsHistory} keyLength={12}>
+                          <Route path="/" component={MainLayout}/>
+                      </HashRouter> */}
+                      <ConnectedRouter history={history}>
+                          <Route path="/" component={IndexPage}/>
+                      </ConnectedRouter>
+                </IntlProvider>
             </Provider>
           )
       }

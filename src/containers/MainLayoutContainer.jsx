@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import MainLayout from '../components/MainLayout.jsx';
-
+import * as allActions from "../actions/mainLayoutAction.jsx";
+import { bindActionCreators } from 'redux';
 // 容器组件代码
 const mapStateToProps = (state, ownProps) => {
     return {
@@ -13,7 +14,7 @@ const mapDispatchToProps = (
     ownProps
 ) => {
     return {
-        //actions:bindActionCreators(allActions,dispatch)
+       actions:bindActionCreators(allActions,dispatch)
     };
 }
 

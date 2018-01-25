@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {FormattedMessage} from 'react-intl';
 import GlobalFooter from 'ant-design-pro/es/GlobalFooter';
 import * as user from '../util/User.jsx';
-import { Layout, Menu, Breadcrumb, Icon,Row,Col } from 'antd';
+import { Layout, Menu, Breadcrumb, Icon,Row,Col,Button} from 'antd';
 const { Header, Content, Footer, Switch ,Sider } = Layout;
 const SubMenu = Menu.SubMenu;
 import {
@@ -106,7 +107,13 @@ export default class MainLayout extends React.Component {
       blankTarget: true,
     }];
     
-    const copyright = <div>Copyright <Icon type="copyright" /> sealing system</div>;
+    const copyright =
+    (<div>Copyright <Icon type="copyright" />
+    <FormattedMessage
+      id='intl.copyright'
+      description='sealing System.'
+      defaultMessage='sealing System.'
+    /></div>);
     //let pathKey = this.props.location.pathname.split("/")[2]||"home"
     let pathKey = this.props.match.params.pagename||"home";
     console.log("MainLayout props",this.props)
