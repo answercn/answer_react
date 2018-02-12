@@ -86,7 +86,12 @@ export default class MainLayout extends React.Component {
       if (!user.isLogin()) {
         this.props.history.push('/login', null);
       }
-    }
+      fetch("http://localhost:8080/service/api").then((r)=>{
+        return r.json()
+      }).then((t)=>{
+        console.log("nginx 反向代理内容",t)
+      })
+  }
   onCollapse(collapsed) {
     this.setState({ collapsed });
   }

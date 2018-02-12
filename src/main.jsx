@@ -26,6 +26,7 @@ import indexReducer from './reducers/indexReducer.jsx';
 import createHistory from 'history/createHashHistory';
 import thunk from 'redux-thunk';
 import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-router-redux';
+import { BrowserRouter } from 'react-router-dom';
 import {
     BrowserRouter as Router,
     HashRouter,
@@ -45,7 +46,7 @@ const initialState = {
 }
 //创建日志
 // Create a history of your choosing (we're using a browser history in this case)
-const history = createHistory()
+const history = createHistory();
 // Build the middleware for intercepting and dispatching navigation actions
 const middleware = routerMiddleware(history);
 
@@ -81,8 +82,9 @@ class Basic extends React.Component {
           return (
             <Provider store={store}>
                 <IntlProvider locale={'zh'} messages={zh_CN}>
+                
                     {/* <HashRouter forceRefresh={!supportsHistory} keyLength={12}>
-                          <Route path="/" component={MainLayout}/>
+                          <Route path="/" component={IndexPage}/>
                       </HashRouter> */}
                       <ConnectedRouter history={history}>
                           <Route path="/" component={IndexPage}/>

@@ -6,9 +6,11 @@
     "eslintinit": "eslint --init",
     "lint": "eslint --ext .js src test",
     "precommit": "npm run lint",
+    "eslintCode":"eslint ./src/*",
     "devbuild": "cross-env NODE_ENV=development webpack --config webpack.dev.config.js --progress --color",
     "probuild": "cross-env NODE_ENV=production webpack --config webpack.config.js --progress --color",
-    "start": "cross-env NODE_ENV=development node server.js"
+    "start": "cross-env NODE_ENV=development node server.js",
+    "startMock": "json-server api/resourse/db.json --port 8002"
   },
   "engines": {
     "install-node": "6.11.1"
