@@ -6,7 +6,7 @@
     "eslintinit": "eslint --init",
     "lint": "eslint --ext .js src test",
     "precommit": "npm run lint",
-    "eslintCode":"eslint ./src/*",
+    "eslintCode": "eslint ./src/*",
     "devbuild": "cross-env NODE_ENV=development webpack --config webpack.dev.config.js --progress --color",
     "probuild": "cross-env NODE_ENV=production webpack --config webpack.config.js --progress --color",
     "start": "cross-env NODE_ENV=development node server.js",

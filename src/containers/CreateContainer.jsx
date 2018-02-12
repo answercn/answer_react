@@ -12,54 +12,6 @@ const MonthPicker = DatePicker.MonthPicker;
 const RangePicker = DatePicker.RangePicker;
 
 //容器组件开始
-class Create extends React.Component{
-    constructor(...props){
-        super(...props);
-    }
-    sizeCheck(rule, values, callback){
-        //该方法为自定义实时校验，错误信息作为callback的参数传递进去
-        if(values&&values<10){
-          callback("不能小于十");//只要callback中放置内容就会走error，return无效，return只能不让代码继续执行
-        }else{
-          callback()//callback必须执行，不传参数给callback视为通过验证
-        }
-    }
-    handleSubmit = (e) => {
-        debugger
-        e.preventDefault();
-        //表单数据校验
-        this.props.form.validateFields((err, fieldsValue) => {
-            console.log(err)
-          if (err) {
-            return;
-          }
-         fieldsValue['date-time-picker'].format('YYYY-MM-DD HH:mm:ss'),
-          this.props.actions.ceateSave(fieldsValue);
-          
-        });
-    }
-    componentDidUpdate(){
-    
-    }
-    componentDidMount(){
-        //可在此处通过该方法将带过来的值或者请求来的值设置到form中
-        this.props.form.setFieldsValue({country:"use",testEnter:"testcontent"})
-    }
-    componentWillReceiveProps(nextprops){
-    
-    }
-    handleCountryChange = (value) => {
-        this.props.form.setFieldsValue({
-            countryCode: value === 'china' ? `Hi,${value}!`: "",
-        });
-    }
-    render(){
-        return(
-            <CreateComponents sizeCheck={this.sizeCheck.bind(this)} handleSubmit={this.handleSubmit.bind(this)} handleCountryChange={this.handleCountryChange.bind(this)} {...this.props}/>
-        )
-    }
-}
-
 /**
  * form高阶组件包装start
  * */
@@ -96,11 +48,10 @@ const createFormOption = {
     },
 }
 //经过FORM HOC的处理
-const CreateWithForm = Form.create(createFormOption)(Create)
+const CreateWithForm = Form.create(createFormOption)(CreateComponents)
 /**
  * form高阶组件包装end
  * */
-
 
 /**
 * connect链接redux
@@ -117,7 +68,35 @@ const mapDispatchToProps = (
     ownProps
 ) => {
     return {
-      actions:bindActionCreators(allActions,dispatch)
+        actions:bindActionCreators(allActions, dispatch),
+        sizeCheck(rule, values, callback){
+            //该方法为自定义实时校验，错误信息作为callback的参数传递进去
+            if(values&&values<10){
+            callback("不能小于十");//只要callback中放置内容就会走error，return无效，return只能不让代码继续执行
+            }else{
+            callback()//callback必须执行，不传参数给callback视为通过验证
+            }
+        },
+        handleSubmit (e){
+            e.preventDefault();
+           
+
+            //表单数据校验
+            this.props.form.validateFields((err, fieldsValue) => {
+                console.log(err)
+            if (err) {
+                return;
+            }
+            fieldsValue['date-time-picker'].format('YYYY-MM-DD HH:mm:ss'),
+            this.props.actions.ceateSave(fieldsValue);
+            
+            });
+        },
+        handleCountryChange (value) {
+            this.props.form.setFieldsValue({
+                countryCode: value === 'china' ? `Hi,${value}!`: "",
+            });
+        }
     };
 }
 

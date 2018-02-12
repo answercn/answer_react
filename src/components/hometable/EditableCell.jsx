@@ -3,24 +3,27 @@ import ReactDOM from 'react-dom';
 import { Table, Input, Icon, Button, Popconfirm } from 'antd';
 
 export default class EditableCell extends React.Component {
-    state = {
-      value: this.props.value,
-      editable: false,
+    constructor(){
+      super();
+      this.state = {
+        value: this.props.value,
+        editable: false,
+      }
     }
-    handleChange = (e) => {
+    handleChange(e){
       const value = e.target.value;
       this.setState({ value });
     }
-    check = () => {
+    check(){
       this.setState({ editable: false });
       if (this.props.onChange) {
         this.props.onChange(this.state.value);
       }
     }
-    edit = () => {
+    edit(){
       this.setState({ editable: true });
     }
-    render() {
+    render(){
       const { value, editable } = this.state;
       return (
         <div className="editable-cell">

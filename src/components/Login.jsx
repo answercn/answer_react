@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Link} from 'react-router-dom';
 import * as user from '../util/User.jsx';
-import { Form, Icon, Input, Button, Checkbox,Row,Col} from 'antd';
+import { Form, Icon, Input, Button, Checkbox, Row, Col} from 'antd';
 const FormItem = Form.Item;
 import Result from 'ant-design-pro/es/Result';
 import {LoginBanner} from './LoginBanner.jsx'

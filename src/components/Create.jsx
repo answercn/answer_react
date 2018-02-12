@@ -19,10 +19,9 @@ export default class Create extends React.Component {
   constructor(...props){
     super(...props);
   }
-  componentDidUpdate(){
-    console.log("componentDidUpdate",this);
-   
-
+  componentDidMount(){
+    //可在此处通过该方法将带过来的值或者请求来的值设置到form中
+    this.props.form.setFieldsValue({country:"use", testEnter:"testcontent"})
   }
   render() {
     const { getFieldDecorator } = this.props.form;
