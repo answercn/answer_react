@@ -1,10 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Table, Input, Icon, Button, Popconfirm } from 'antd';
-
+import PropTypes from 'prop-types';
 export default class EditableCell extends React.Component {
-    constructor(){
-      super();
+    constructor(...args){
+      super(...args);
       this.state = {
         value: this.props.value,
         editable: false,
@@ -54,4 +52,8 @@ export default class EditableCell extends React.Component {
         </div>
       );
     }
+  }
+  EditableCell.propTypes = {
+    value:PropTypes.any,
+    onChange:PropTypes.func
   }

@@ -26,7 +26,7 @@ export  class LoginForm extends React.Component {
                     {/* <Col span={8}></Col> */}
                     <Col xs={{ span: 24}} lg={{ span: 6, offset:6 }}>
                         <div className="login-box-form">
-                            <Form id="login-form" onSubmit={this.props.handleSubmit} className="login-form">
+                            <Form id="login-form" onSubmit={(event)=>{this.props.handleSubmit(event, this.props)}} className="login-form">
                                     <FormItem>
                                     {getFieldDecorator('userName', {
                                         rules: [
