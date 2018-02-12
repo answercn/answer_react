@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`(Container) ContactSetting snapshots mapDispatchToProps 1`] = `
+Object {
+  "actions": Object {
+    "ceateSave": [Function],
+    "initHomeData": [Function],
+    "onChangeValue": [Function],
+  },
+  "handleCountryChange": [Function],
+  "handleSubmit": [Function],
+  "sizeCheck": [Function],
+}
+`;
+
+exports[`(Container) ContactSetting snapshots mapStateToProps 1`] = `
+Object {
+  "createData": Object {
+    "country": "",
+    "countryCode": "",
+    "productname": "",
+    "sealingstatus": "",
+    "size": "",
+  },
+}
+`;

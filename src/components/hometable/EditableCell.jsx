@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Input, Icon} from 'antd';
 export default class EditableCell extends React.Component {
     constructor(...args){
       super(...args);

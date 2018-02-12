@@ -14,5 +14,17 @@
                     "style": true
                 }
             ]
-        ]
+        ],
+        "env": {
+            "node": {
+              "plugins": [
+                [
+                 "babel-plugin-transform-require-ignore",
+                  {
+                    "extensions":  [".less", ".sass"]
+                  }
+                ]
+              ]
+            }
+          }
 }
